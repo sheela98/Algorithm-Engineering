@@ -1,0 +1,113 @@
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Algorithm Engineering}
+\subtitle{Exam Assignments}
+
+
+\author{Sheela Orgler}
+\institute{Friedrich Schiller Universität, Jena} 
+
+\maketitle
+
+% \begin{abstract}
+%
+% \end{abstract}
+
+\section{Assignment}
+
+\subsection{Describe how parallelism differs from concurrency}
+Parallelism is a subset of concurrency. If a system is parallel it is also concurrent, but not the other way around. A system is considered parallel if two or more tasks are executed simultaneously.
+\\
+Concurrency only means support for two or more actions at the same time. Parallelism refers to execution of more than one action at the same time.
+
+\subsection{What is fork-join parallelism?}
+Fork-join parallelism refers to a concept where we have a master thread that divides into a team of threads. With this concept we only have parallel regions where threads are executed simultaneously. In between these parallel regions the execution is sequential following the master thread. 
+\\
+We can imagine execution as a line that is followed from starting to end point. With fork-join parallelism this line is our master thread. Following our master thread at some point the thread can divide into two or more threads. These threads are joined after some time to our master thread. In these sections where we have two or more threads execution will be parallel and after these sections sequential. 
+
+
+\subsection {Chapter 1 – Computer Systems: A Programmer’s Perspective}
+
+\paragraph{Discuss one thing - Caches}
+As discussed in Chapter 1 of the book caches are helpful to deal with the processor-memory gap. 
+
+The processor can read data from the register file, which is within the CPU almost 100 times faster than from memory. The gap between processor and memory is continuously growing. 
+
+Cache memory is used to bridge the gap. It is used to temporarily store information that will likely be used in the future. There exist several levels of caches -  L1, L2, L3 - which go from smallest to largest. 
+
+A cache reduces the acess time to data in memory. Frequently used data and instructions are kept in the cache. Access to data kept there is faster.
+
+Modern desktops, servers and industrial CPUs have at least three independent caches: instruction cache, data cache and the TLB. The instruction cache is used to speed up executable instruction fetches. The data cache speeds up data fetch and store. It is organized into more cache levels:
+\begin{itemize}
+	\item L1 cache - Primary cache is fast but small and usually embedded in the processor chip (CPU)
+	\item L2 cache - Secondary cache is larger and can be embedded in the CPU or on a seperate chip or coprocessor containing a high-speed alternative system bus connectin cache and CPU.
+	\item L3 cache - specialized memory to improve L1 and L2. L3 is usually double the speed of DRAM
+\end{itemize}
+The small caches L1 are backed up by larger and slower caches L2, L3 to address the tradeoff between cache latency and hit rate. The faster cache is generally checked firt. If that cache misses, the next chache is checked and so on, before accessing main memory.
+
+For example the ARM-base Apple M1 CPU has 8 cores: 4 high-performance and four high-efficiency cores. The four high-performance cores have a 192 KiB L1 cache for each of the cores and the four high-efficiency cores only have 128 KiB.
+
+The Translation lookaside buffer is used to speed up the translation from virtual to physical addresses. It is part of the memory management unit and not directly related to CPU caches.
+
+% https://en.wikipedia.org/wiki/CPU_cache#First_instruction_cache
+% https://www.techtarget.com/searchstorage/definition/cache-memory
+
+\subsection {Paper – There’s plenty of room at the Top: What will drive computer performance after Moore’s law?}
+
+\paragraph{Explain figure “Performance gains after Moore’s law ends”}
+The figure illustrates the “Top” and “Bottom” referring to computer performance gains. The “Bottom” refers to the miniaturization of computer components seen in the last decades. \\
+Due to physical limits the opportunities for gains at the bottom will slowly come to an end. Nevertheless, there are still opportunities for growth at the “Top”. The “Top” shows the three aspects where growth can be expected: software, algorithms, hardware architecture. These aspects are divided into technology, opportunity and examples all looking into the growth opportunities in the specific area.
+\\
+Growth opportunities at the “Top”:
+\begin{itemize}
+	\item making software more efficient by performance engineering
+	\item minimizing the time it takes to run and not the development time
+	\item an increasing number of processor cores running parallel
+	\item reengineer modularity to obtain performance gains
+\end{itemize}
+
+
+\section{Assignment}
+
+\subsection{What causes false sharing?}
+
+\subsection{How do mutual exclusion constructs prevent race conditions?}
+
+\subsection{Explain the differences betweent static and dynamic schedules in OpenMP.}
+
+\subsection{What can we do if we've found a solution while running a parallel for loop in OpenMP, but still have many iterations left?}
+
+\subsection{Coding warmup slide 22: Explain in your own words how std::atomic::compare\_exchange\_weak work}
+
+
+
+
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+% \bibliographystyle{splncs04}
+% \bibliography{mybibliography}
+%
+\begin{thebibliography}{8}
+
+%\bibitem{ref_book1}
+%Arpaci-Dusseau, Remzi H and Arpaci-Dusseau, Andrea C.: Operating systems: Three easy pieces. Arpaci-Dusseau Books LLCr,
+ %(2018)
+
+\bibitem{ref_url1}
+Armv8-A Reference Manual pdf, pages 30-70, pages 1708-1808 \\ \url{https://developer.arm.com/documentation/ddi0487/ga}.
+
+
+\bibitem{ref_url2}
+Armv8-A Address Translation pdf, \url{https://developer.arm.com/documentation/100940/0101/}.
+
+\end{thebibliography}
+\end{document}
