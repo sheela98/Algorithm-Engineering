@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.3.7)  26 OCT 2022 13:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.3.7)  2 NOV 2022 13:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Hausarbeit_LaTeX/paper.tex"
-(/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Hausarbeit_LaTeX/paper.tex
+**"/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.tex"
+(/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.tex
 LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18> (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Hausarbeit_LaTeX/llncs.cls
+L3 programming layer <2021-02-18> (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/llncs.cls
 Document Class: llncs 2022/01/12 v2.21 
  LaTeX document class for Lecture Notes in Computer Science
 (/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
@@ -171,7 +171,7 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count283
 \l__pdf_internal_box=\box95
-) (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Hausarbeit_LaTeX/paper.aux)
+) (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.aux)
 \openout1 = `paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -213,28 +213,25 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 15.
  [1
 
-{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \vbox (badness 1502) has occurred while \output is active []
-
- [2]
-Overfull \hbox (40.6948pt too wide) in paragraph at lines 110--111
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+Overfull \hbox (40.6948pt too wide) in paragraph at lines 122--123
 []\T1/cmr/m/n/9 Armv8-A Ad-dress Trans-la-tion pdf, https://developer.arm.com/documentation/100940/0101/. 
  []
 
-[3] (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Hausarbeit_LaTeX/paper.aux) ) 
+[3] [4] (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.aux) ) 
 Here is how much of TeX's memory you used:
  1822 strings out of 478994
- 25375 string characters out of 5858185
+ 25562 string characters out of 5858185
  324791 words of memory out of 5000000
  19333 multiletter control sequences out of 15000+600000
  409503 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,5n,74p,504b,297s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Hausarbeit_LaTeX/paper.pdf" (3 pages, 123999 bytes).
+ 68i,5n,74p,521b,159s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
+Output written on "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.pdf" (4 pages, 136050 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 46 PDF objects out of 1000 (max. 8388607)
+ 32 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

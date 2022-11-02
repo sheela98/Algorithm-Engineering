@@ -75,16 +75,28 @@ Growth opportunities at the “Top”:
 \section{Assignment}
 
 \subsection{What causes false sharing?}
+False sharing occurs, when threads on different processors modify variables on the same cache line. A cache line is the smallest unit of memory. Its length depends on the underlying architecture and is typically 64 and in more recent architectures 128 bytes long.
+\\
+False sharing happens when for example two threads on different processors modify variables on the same cache line. The first thread modifies one variable at the beginning of the cache line. The second thread tries to modify a variable at the end of the cache line. Due to the alteration of the first thread, the cache line is invalidated for the second thread and has to be reloaded.
+\\
+False sharing only happens when variables are changed and not when they are only read. It may lead to a significant performance decrease.
+
 
 \subsection{How do mutual exclusion constructs prevent race conditions?}
+Race conditions occur when two threads modify the same data. Mutual exclusions give one thread exclusive access to the data. After execution exclusive access is returned and the next thread can execute.
 
 \subsection{Explain the differences betweent static and dynamic schedules in OpenMP.}
+Static and dynamic schedules differ in how the work \( iterations of the for loop \)) is spread across the threads. Static means that it is decided at the beginning and dynamic means that it is decided at runtime. Each thread will work on a chunk of values and then take the next chunk that hasn't been worked on by any thread.
+Static schedules perform better for balanced workloads and dynamic schedules for unbalanced workloads, in case the workload varies between different iterations of the for loop.
+The chunk size can be specifies; for static schedules it is one per default.
 
 \subsection{What can we do if we've found a solution while running a parallel for loop in OpenMP, but still have many iterations left?}
+If we've found a solution within a parallel for loop, we can use continue. We don't continue calculating, but quickly iterate through the loop to increase performance.
 
-\subsection{Coding warmup slide 22: Explain in your own words how std::atomic::compare\_exchange\_weak work}
 
-
+\subsection{Explain in your own words how std::atomic::compare\_exchange\_weak work}
+strd::atomic::compare\_exchange\_weak  succeeds only if the value of the variable to be updated equals the first provided argument.
+For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution equals to previous. Previous is updated with i, if it fails.
 
 
 %
