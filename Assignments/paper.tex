@@ -98,11 +98,20 @@ If we've found a solution within a parallel for loop, we can use continue. We do
 strd::atomic::compare\_exchange\_weak  succeeds only if the value of the variable to be updated equals the first provided argument.
 For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution equals to previous. Previous is updated with i, if it fails.
 
+\section{Assignment}
+
+\subsection{How does ordered clause in OpenMP work in conjunction with a parallel loop?}
+\subsection{What is the collapse clause in OpenMP good for?}
+\subsection{Explain how reductions work internally in OpenMP}
+\subsection{What is the purpose of a barrier in parallel computing?}
+\subsection{Explain the difference between the library routines: omp\_get\_num\_threads(), omp\_get\_num\_procs() and omp\_get\_max\_threads().}
+\subsection{Clarify how the storage attributes private and firstprivate differ from each other.}
+\subsection{Write in pseudo code how the computation of pi can be parallelized with simple threads.}
 
 %
 % ---- Bibliography ----
 %
-% BibTeX users should specify bibliography style 'splncs04'.
+% BibTeX users should specify bibliography style 'splncs04'
 % References will then be sorted and formatted in the correct style.
 %
 % \bibliographystyle{splncs04}
@@ -110,16 +119,8 @@ For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_s
 %
 \begin{thebibliography}{8}
 
-%\bibitem{ref_book1}
-%Arpaci-Dusseau, Remzi H and Arpaci-Dusseau, Andrea C.: Operating systems: Three easy pieces. Arpaci-Dusseau Books LLCr,
- %(2018)
-
 \bibitem{ref_url1}
 Armv8-A Reference Manual pdf, pages 30-70, pages 1708-1808 \\ \url{https://developer.arm.com/documentation/ddi0487/ga}.
-
-
-\bibitem{ref_url2}
-Armv8-A Address Translation pdf, \url{https://developer.arm.com/documentation/100940/0101/}.
 
 \end{thebibliography}
 \end{document}

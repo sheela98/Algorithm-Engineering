@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.3.7)  2 NOV 2022 13:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.3.7)  8 NOV 2022 11:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -213,22 +213,17 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 15.
  [1
 
-{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (40.6948pt too wide) in paragraph at lines 122--123
-[]\T1/cmr/m/n/9 Armv8-A Ad-dress Trans-la-tion pdf, https://developer.arm.com/documentation/100940/0101/. 
- []
-
-[3] [4] (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.aux) ) 
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] (/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.aux) ) 
 Here is how much of TeX's memory you used:
- 1822 strings out of 478994
- 25562 string characters out of 5858185
- 324791 words of memory out of 5000000
- 19333 multiletter control sequences out of 15000+600000
+ 1821 strings out of 478994
+ 25552 string characters out of 5858185
+ 324788 words of memory out of 5000000
+ 19332 multiletter control sequences out of 15000+600000
  409503 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,5n,74p,521b,159s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,5n,74p,521b,298s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.pdf" (4 pages, 136050 bytes).
+Output written on "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/Assignments/paper.pdf" (4 pages, 137731 bytes).
 PDF statistics:
  46 PDF objects out of 1000 (max. 8388607)
  32 compressed objects within 1 object stream
