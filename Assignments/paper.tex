@@ -1,7 +1,16 @@
 \documentclass[runningheads]{llncs}
-
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{listings}
+
+\lstset{
+	language=C++,
+    %basicstyle=\ttfamily,
+    %keywordstyle=\color{blue}\ttfamily,
+    %stringstyle=\color{red}\ttfamily,
+    %commentstyle=\color{green}\ttfamily,
+    %morecomment=[l][\color{magenta}]{\#}
+}
 
 \begin{document}
 
@@ -14,10 +23,8 @@
 
 \maketitle
 
-% \begin{abstract}
-%
-% \end{abstract}
 
+% (1)
 \section{Assignment}
 
 \subsection{Describe how parallelism differs from concurrency}
@@ -72,6 +79,7 @@ Growth opportunities at the “Top”:
 \end{itemize}
 
 
+% (2)
 \section{Assignment}
 
 \subsection{What causes false sharing?}
@@ -98,15 +106,70 @@ If we've found a solution within a parallel for loop, we can use continue. We do
 strd::atomic::compare\_exchange\_weak  succeeds only if the value of the variable to be updated equals the first provided argument.
 For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution equals to previous. Previous is updated with i, if it fails.
 
+% (3)
 \section{Assignment}
 
 \subsection{How does ordered clause in OpenMP work in conjunction with a parallel loop?}
+An ordered clause is used within a parallel region. It opens a region where the execution is sequential, in order to prevent race conditions.
+
+
 \subsection{What is the collapse clause in OpenMP good for?}
+The collapse clause is used to parallelize for loops. It allows to specify how many loops are collapsed into one. The collapse clause is useful for balancing work and parallelize multiple loops to boost performance.
+When using the collapse clause a single loop is formed. The length of the new loop is equal to the multiplication of the length of each loop that has to be collapsed into one.
+
 \subsection{Explain how reductions work internally in OpenMP}
+A reduction is an operation form OpenMP that is used in parallel computing. 
+It reduces the calues into a single result.
+The syntax of the operation is: \lstinline{reduction(op:list)}. op refers to the operation, which can be +, -, *, and so on. list refers to a list of variables that is reduced.
+For example: A reduction can be used within a parallel for loop: 
+\lstinline{#pragma omp parallel for reduction(+ : sum) } to compute the sum of the values 1, 2, 3. Every thread within the parallel region gets a local sum variable, where the sum is computed. The result will be written to the global sum variable declared outside of the parallel region.
+
 \subsection{What is the purpose of a barrier in parallel computing?}
+A barrier can be set within a parallel region. Setting a barrier means that the threads will execute the code until that specific barrier. There they wait until all threads have reached the barrier and only then continue with execution.
+Barriers are used for synchronization in parallel regions, where they enforce a specific execution order. \\
+Within OpenMP there are also implicit barriers. The most general barrier is the omp parallel region itself. The region makes sure that execution is parallel within that region. After the code from that region is executed in parallel execution will continue sequentially. 
+
 \subsection{Explain the difference between the library routines: omp\_get\_num\_threads(), omp\_get\_num\_procs() and omp\_get\_max\_threads().}
+\begin{itemize}
+	\item omp\_get\_num\_threads() - 
+	The routine is called inside a parallel region. It is used to get the number of threads used within a parallel region.
+	\item omp\_get\_num\_procs() - 
+	The routine is used to get the number of logical cored. It can be used to define the number of threads reasonable to use in a parallel region. Per default the number of threads is equal to the number of logical cores.
+	\item omp\_get\_max\_threads() - 
+	The routine is called outside a parallel region and returns the number of threads supported in a parallel region. When the value is changed with omp\_set\_num\_threads() within a parallel region, the method returns the set value.
+\end{itemize}
+
 \subsection{Clarify how the storage attributes private and firstprivate differ from each other.}
+Storage attributes are used to specify the usage of variables within a parallel region. It is used for variables declared outside a parallel region.
+There are three different storage attributes: shared, firstprivate and private.
+
+Private attributes make sure that each thread gets an uninitialized copy of the variable.
+Firstprivate attributes make sure that eacht thrad gets an identical initialized copy of the variable. The variable is a local variable for each thread.
+When using private or firstprivate storage attributes the value of the global variable remains unchanged.
+
 \subsection{Write in pseudo code how the computation of pi can be parallelized with simple threads.}
+\begin{lstlisting} [language=TeX]
+	initialize num_steps to 100000000
+	initialize width to 1.0
+	initialize sum to 0.0
+
+	do in parallel:
+	  initialize sum_local to 0.0
+	  for i in {0, num_steps} do
+	    set x to ((i + 0.5) * width)
+		add sum_local to (1.0 / (1.0 + x * x))
+		
+		do sequentially:
+		  add sum sum_local
+	
+	initialize pi to sum * 4 * width
+	return pi
+
+
+\end{lstlisting}
+
+% (4)
+\section{Assignment}
 
 %
 % ---- Bibliography ----
