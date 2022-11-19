@@ -172,11 +172,37 @@ When using private or firstprivate storage attributes the value of the global va
 \section{Assignment}
 
 \subsection{Explain how divide and conquer algorithms can be parallelized with tasks in OpenMP.}
+Divide and conquer algorithms recursively split down a problem until the pieces can be directly solved.
+Such algorithms can be paralleized in OpenMP using the constructs taks and taskwait for the recursive call.
+OpenMP tasks are independent work blocks. A queueing system dynamically handles the assignment of threads to the tasks. 
+Each threads picks up a task from the queue and executes it. This goes on until the queue is empty. 
+Tasks are defined within a parallel region and within a single construct, to make sure that one thread creates the tasks.
+Taskwait is a construct that waits until all tasks are executed.
+
 \subsection{Describe some ways to speed up merge sort.}
+\begin{itemize}
+	\item Tasks - With task and taskwait
+	\item Avoid copying - to prevent that additional memory is created recursively and make sure that initially memory is instantiated and reused.
+	\item if Clause - task will only be created, if a certain condition is true
+	\item final Clause - tasks won't be created anymore, if a condition is true
+\end{itemize}
+
+
 \subsection{What is the idea behind multithreaded merging?}
+The goal is to sort and merge two arrays using a divide and conquer algorithm. To do that we look at the median of the
+array with more elements. Then we look at the other array and compare the elements smaller than the median and merge these
+with the respective elements from the other array. That way merge is executed in parallel.
+
+
 \subsection{Read What every systems programmer should know about concurrency. https://assets.bitbashing.io/papers/concurrency- primer.pdf
 Discuss two things you find particularly interesting.}
+The order of written code can be changed as compiler try to optimize it and rewrite code to run faster on the targeted hardware.
+RAM hasn’t speeded up the way CPU processors have. This creates a widening gap between the instruction fetch and the time needed to retrieve data from memory.
+To prevent reordering we can use atomic types in C or C++.
 
+Atomicity means that something can’t be divided into smaller pieces. Threads need to use atomic reads and writes to share data. 
+If they are not atomic they are so-called torn reads and writes.
+To ensure atomicity one need to make sure that variables used for thread synchronization aren’t larger than the CPU word size.
 %
 % ---- Bibliography ----
 %
