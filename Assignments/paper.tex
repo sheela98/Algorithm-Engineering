@@ -28,14 +28,22 @@
 \section{Assignment}
 
 \subsection{Describe how parallelism differs from concurrency}
-Parallelism is a subset of concurrency. If a system is parallel it is also concurrent, but not the other way around. A system is considered parallel if two or more tasks are executed simultaneously.
+Parallelism is a subset of concurrency. If a system is parallel it is also concurrent, but not the other way around. 
+A system is considered parallel if two or more tasks are executed simultaneously.
 \\
-Concurrency only means support for two or more actions at the same time. Parallelism refers to execution of more than one action at the same time.
+Concurrency only means support for two or more actions at the same time. 
+Parallelism refers to execution of more than one action at the same time.
 
 \subsection{What is fork-join parallelism?}
-Fork-join parallelism refers to a concept where we have a master thread that divides into a team of threads. With this concept we only have parallel regions where threads are executed simultaneously. In between these parallel regions the execution is sequential following the master thread. 
+Fork-join parallelism refers to a concept where we have a master thread that divides into a team of threads. 
+With this concept we only have parallel regions where threads are executed simultaneously. 
+In between these parallel regions the execution is sequential following the master thread. 
 \\
-We can imagine execution as a line that is followed from starting to end point. With fork-join parallelism this line is our master thread. Following our master thread at some point the thread can divide into two or more threads. These threads are joined after some time to our master thread. In these sections where we have two or more threads execution will be parallel and after these sections sequential. 
+We can imagine execution as a line that is followed from starting to end point. 
+With fork-join parallelism this line is our master thread. 
+Following our master thread at some point the thread can divide into two or more threads. 
+These threads are joined after some time to our master thread. 
+In these sections where we have two or more threads execution will be parallel and after these sections sequential. 
 
 
 \subsection {Chapter 1 – Computer Systems: A Programmer’s Perspective}
@@ -43,23 +51,32 @@ We can imagine execution as a line that is followed from starting to end point. 
 \paragraph{Discuss one thing - Caches}
 As discussed in Chapter 1 of the book caches are helpful to deal with the processor-memory gap. 
 
-The processor can read data from the register file, which is within the CPU almost 100 times faster than from memory. The gap between processor and memory is continuously growing. 
+The processor can read data from the register file, which is within the CPU almost 100 times faster than from memory. 
+The gap between processor and memory is continuously growing. 
 
-Cache memory is used to bridge the gap. It is used to temporarily store information that will likely be used in the future. There exist several levels of caches -  L1, L2, L3 - which go from smallest to largest. 
+Cache memory is used to bridge the gap. It is used to temporarily store information that will likely be used in the future. 
+There exist several levels of caches -  L1, L2, L3 - which go from smallest to largest. 
 
-A cache reduces the acess time to data in memory. Frequently used data and instructions are kept in the cache. Access to data kept there is faster.
+A cache reduces the acess time to data in memory. Frequently used data and instructions are kept in the cache. 
+Access to data kept there is faster.
 
-Modern desktops, servers and industrial CPUs have at least three independent caches: instruction cache, data cache and the TLB. The instruction cache is used to speed up executable instruction fetches. The data cache speeds up data fetch and store. It is organized into more cache levels:
+Modern desktops, servers and industrial CPUs have at least three independent caches: instruction cache, data cache and the TLB. 
+The instruction cache is used to speed up executable instruction fetches. The data cache speeds up data fetch and store. 
+It is organized into more cache levels:
 \begin{itemize}
 	\item L1 cache - Primary cache is fast but small and usually embedded in the processor chip (CPU)
-	\item L2 cache - Secondary cache is larger and can be embedded in the CPU or on a seperate chip or coprocessor containing a high-speed alternative system bus connectin cache and CPU.
+	\item L2 cache - Secondary cache is larger and can be embedded in the CPU or on a seperate chip or coprocessor containing 
+	a high-speed alternative system bus connectin cache and CPU.
 	\item L3 cache - specialized memory to improve L1 and L2. L3 is usually double the speed of DRAM
 \end{itemize}
-The small caches L1 are backed up by larger and slower caches L2, L3 to address the tradeoff between cache latency and hit rate. The faster cache is generally checked firt. If that cache misses, the next chache is checked and so on, before accessing main memory.
+The small caches L1 are backed up by larger and slower caches L2, L3 to address the tradeoff between cache latency and hit rate. 
+The faster cache is generally checked firt. If that cache misses, the next chache is checked and so on, before accessing main memory.
 
-For example the ARM-base Apple M1 CPU has 8 cores: 4 high-performance and four high-efficiency cores. The four high-performance cores have a 192 KiB L1 cache for each of the cores and the four high-efficiency cores only have 128 KiB.
+For example the ARM-base Apple M1 CPU has 8 cores: 4 high-performance and four high-efficiency cores. 
+The four high-performance cores have a 192 KiB L1 cache for each of the cores and the four high-efficiency cores only have 128 KiB.
 
-The Translation lookaside buffer is used to speed up the translation from virtual to physical addresses. It is part of the memory management unit and not directly related to CPU caches.
+The Translation lookaside buffer is used to speed up the translation from virtual to physical addresses. 
+It is part of the memory management unit and not directly related to CPU caches.
 
 % https://en.wikipedia.org/wiki/CPU_cache#First_instruction_cache
 % https://www.techtarget.com/searchstorage/definition/cache-memory
@@ -67,8 +84,12 @@ The Translation lookaside buffer is used to speed up the translation from virtua
 \subsection {Paper – There’s plenty of room at the Top: What will drive computer performance after Moore’s law?}
 
 \paragraph{Explain figure “Performance gains after Moore’s law ends”}
-The figure illustrates the “Top” and “Bottom” referring to computer performance gains. The “Bottom” refers to the miniaturization of computer components seen in the last decades. \\
-Due to physical limits the opportunities for gains at the bottom will slowly come to an end. Nevertheless, there are still opportunities for growth at the “Top”. The “Top” shows the three aspects where growth can be expected: software, algorithms, hardware architecture. These aspects are divided into technology, opportunity and examples all looking into the growth opportunities in the specific area.
+The figure illustrates the “Top” and “Bottom” referring to computer performance gains. 
+The “Bottom” refers to the miniaturization of computer components seen in the last decades. \\
+Due to physical limits the opportunities for gains at the bottom will slowly come to an end.
+ Nevertheless, there are still opportunities for growth at the “Top”. 
+ The “Top” shows the three aspects where growth can be expected: software, algorithms, hardware architecture. 
+ These aspects are divided into technology, opportunity and examples all looking into the growth opportunities in the specific area.
 \\
 Growth opportunities at the “Top”:
 \begin{itemize}
@@ -83,68 +104,92 @@ Growth opportunities at the “Top”:
 \section{Assignment}
 
 \subsection{What causes false sharing?}
-False sharing occurs, when threads on different processors modify variables on the same cache line. A cache line is the smallest unit of memory. Its length depends on the underlying architecture and is typically 64 and in more recent architectures 128 bytes long.
+False sharing occurs, when threads on different processors modify variables on the same cache line. 
+A cache line is the smallest unit of memory. Its length depends on the underlying architecture and is typically 64 and 
+in more recent architectures 128 bytes long.
 \\
-False sharing happens when for example two threads on different processors modify variables on the same cache line. The first thread modifies one variable at the beginning of the cache line. The second thread tries to modify a variable at the end of the cache line. Due to the alteration of the first thread, the cache line is invalidated for the second thread and has to be reloaded.
+False sharing happens when for example two threads on different processors modify variables on the same cache line. 
+The first thread modifies one variable at the beginning of the cache line. 
+The second thread tries to modify a variable at the end of the cache line. 
+Due to the alteration of the first thread, the cache line is invalidated for the second thread and has to be reloaded.
 \\
 False sharing only happens when variables are changed and not when they are only read. It may lead to a significant performance decrease.
 
 
 \subsection{How do mutual exclusion constructs prevent race conditions?}
-Race conditions occur when two threads modify the same data. Mutual exclusions give one thread exclusive access to the data. After execution exclusive access is returned and the next thread can execute.
+Race conditions occur when two threads modify the same data. Mutual exclusions give one thread exclusive access to the data. 
+After execution exclusive access is returned and the next thread can execute.
 
 \subsection{Explain the differences betweent static and dynamic schedules in OpenMP.}
-Static and dynamic schedules differ in how the work \( iterations of the for loop \)) is spread across the threads. Static means that it is decided at the beginning and dynamic means that it is decided at runtime. Each thread will work on a chunk of values and then take the next chunk that hasn't been worked on by any thread.
-Static schedules perform better for balanced workloads and dynamic schedules for unbalanced workloads, in case the workload varies between different iterations of the for loop.
+Static and dynamic schedules differ in how the work \( iterations of the for loop \)) is spread across the threads. 
+Static means that it is decided at the beginning and dynamic means that it is decided at runtime. 
+Each thread will work on a chunk of values and then take the next chunk that hasn't been worked on by any thread.
+Static schedules perform better for balanced workloads and dynamic schedules for unbalanced workloads, 
+in case the workload varies between different iterations of the for loop.
 The chunk size can be specifies; for static schedules it is one per default.
 
 \subsection{What can we do if we've found a solution while running a parallel for loop in OpenMP, but still have many iterations left?}
-If we've found a solution within a parallel for loop, we can use continue. We don't continue calculating, but quickly iterate through the loop to increase performance.
+If we've found a solution within a parallel for loop, we can use continue. We don't continue calculating, 
+but quickly iterate through the loop to increase performance.
 
 
 \subsection{Explain in your own words how std::atomic::compare\_exchange\_weak work}
 strd::atomic::compare\_exchange\_weak  succeeds only if the value of the variable to be updated equals the first provided argument.
-For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution equals to previous. Previous is updated with i, if it fails.
+For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution equals to previous. 
+Previous is updated with i, if it fails.
 
 % (3)
 \section{Assignment}
 
 \subsection{How does ordered clause in OpenMP work in conjunction with a parallel loop?}
-An ordered clause is used within a parallel region. It opens a region where the execution is sequential, in order to prevent race conditions.
+An ordered clause is used within a parallel region. It opens a region where the execution is sequential, 
+in order to prevent race conditions.
 
 
 \subsection{What is the collapse clause in OpenMP good for?}
-The collapse clause is used to parallelize for loops. It allows to specify how many loops are collapsed into one. The collapse clause is useful for balancing work and parallelize multiple loops to boost performance.
-When using the collapse clause a single loop is formed. The length of the new loop is equal to the multiplication of the length of each loop that has to be collapsed into one.
+The collapse clause is used to parallelize for loops. It allows to specify how many loops are collapsed into one. 
+The collapse clause is useful for balancing work and parallelize multiple loops to boost performance.
+When using the collapse clause a single loop is formed. The length of the new loop is equal to the multiplication 
+of the length of each loop that has to be collapsed into one.
 
 \subsection{Explain how reductions work internally in OpenMP}
 A reduction is an operation form OpenMP that is used in parallel computing. 
 It reduces the calues into a single result.
-The syntax of the operation is: \lstinline{reduction(op:list)}. op refers to the operation, which can be +, -, *, and so on. list refers to a list of variables that is reduced.
+The syntax of the operation is: \lstinline{reduction(op:list)}. op refers to the operation, which can be +, -, *, and so on. 
+list refers to a list of variables that is reduced.
 For example: A reduction can be used within a parallel for loop: 
-\lstinline{#pragma omp parallel for reduction(+ : sum) } to compute the sum of the values 1, 2, 3. Every thread within the parallel region gets a local sum variable, where the sum is computed. The result will be written to the global sum variable declared outside of the parallel region.
+\lstinline{#pragma omp parallel for reduction(+ : sum) } to compute the sum of the values 1, 2, 3. 
+Every thread within the parallel region gets a local sum variable, where the sum is computed. 
+The result will be written to the global sum variable declared outside of the parallel region.
 
 \subsection{What is the purpose of a barrier in parallel computing?}
-A barrier can be set within a parallel region. Setting a barrier means that the threads will execute the code until that specific barrier. There they wait until all threads have reached the barrier and only then continue with execution.
+A barrier can be set within a parallel region. Setting a barrier means that the threads will execute the code until that specific barrier. 
+There they wait until all threads have reached the barrier and only then continue with execution.
 Barriers are used for synchronization in parallel regions, where they enforce a specific execution order. \\
-Within OpenMP there are also implicit barriers. The most general barrier is the omp parallel region itself. The region makes sure that execution is parallel within that region. After the code from that region is executed in parallel execution will continue sequentially. 
+Within OpenMP there are also implicit barriers. The most general barrier is the omp parallel region itself. 
+The region makes sure that execution is parallel within that region. 
+After the code from that region is executed in parallel execution will continue sequentially. 
 
 \subsection{Explain the difference between the library routines: omp\_get\_num\_threads(), omp\_get\_num\_procs() and omp\_get\_max\_threads().}
 \begin{itemize}
 	\item omp\_get\_num\_threads() - 
 	The routine is called inside a parallel region. It is used to get the number of threads used within a parallel region.
 	\item omp\_get\_num\_procs() - 
-	The routine is used to get the number of logical cored. It can be used to define the number of threads reasonable to use in a parallel region. Per default the number of threads is equal to the number of logical cores.
+	The routine is used to get the number of logical cored. It can be used to define the number of threads reasonable to use 
+	in a parallel region. Per default the number of threads is equal to the number of logical cores.
 	\item omp\_get\_max\_threads() - 
-	The routine is called outside a parallel region and returns the number of threads supported in a parallel region. When the value is changed with omp\_set\_num\_threads() within a parallel region, the method returns the set value.
+	The routine is called outside a parallel region and returns the number of threads supported in a parallel region. 
+	When the value is changed with omp\_set\_num\_threads() within a parallel region, the method returns the set value.
 \end{itemize}
 
 \subsection{Clarify how the storage attributes private and firstprivate differ from each other.}
-Storage attributes are used to specify the usage of variables within a parallel region. It is used for variables declared outside a parallel region.
+Storage attributes are used to specify the usage of variables within a parallel region. 
+It is used for variables declared outside a parallel region.
 There are three different storage attributes: shared, firstprivate and private.
 
 Private attributes make sure that each thread gets an uninitialized copy of the variable.
-Firstprivate attributes make sure that eacht thrad gets an identical initialized copy of the variable. The variable is a local variable for each thread.
+Firstprivate attributes make sure that eacht thrad gets an identical initialized copy of the variable. 
+The variable is a local variable for each thread.
 When using private or firstprivate storage attributes the value of the global variable remains unchanged.
 
 \subsection{Write in pseudo code how the computation of pi can be parallelized with simple threads.}
@@ -182,7 +227,8 @@ Taskwait is a construct that waits until all tasks are executed.
 \subsection{Describe some ways to speed up merge sort.}
 \begin{itemize}
 	\item Tasks - With task and taskwait
-	\item Avoid copying - to prevent that additional memory is created recursively and make sure that initially memory is instantiated and reused.
+	\item Avoid copying - to prevent that additional memory is created recursively and make sure that initially memory 
+	is instantiated and reused.
 	\item if Clause - task will only be created, if a certain condition is true
 	\item final Clause - tasks won't be created anymore, if a condition is true
 \end{itemize}
@@ -197,12 +243,74 @@ with the respective elements from the other array. That way merge is executed in
 \subsection{Read What every systems programmer should know about concurrency. https://assets.bitbashing.io/papers/concurrency- primer.pdf
 Discuss two things you find particularly interesting.}
 The order of written code can be changed as compiler try to optimize it and rewrite code to run faster on the targeted hardware.
-RAM hasn’t speeded up the way CPU processors have. This creates a widening gap between the instruction fetch and the time needed to retrieve data from memory.
+RAM hasn’t speeded up the way CPU processors have. This creates a widening gap between the instruction fetch and the time 
+needed to retrieve data from memory.
 To prevent reordering we can use atomic types in C or C++.
 
 Atomicity means that something can’t be divided into smaller pieces. Threads need to use atomic reads and writes to share data. 
 If they are not atomic they are so-called torn reads and writes.
 To ensure atomicity one need to make sure that variables used for thread synchronization aren’t larger than the CPU word size.
+
+% (5)
+\section{Assignment}
+
+\subsection{What is CMake?}
+CMake is a script language used to create build files that can be executed across different platforms.
+The build files are executed using a compiler. CMake provides tools to build, test and package software.
+
+\subsection{What role do targets play in CMake?}
+Targets define what is build. They are executables and libraries.
+Targets have constructors to build executables, libraries or tests.
+Targets can be thought of as objects with different properties. To change these properties we can use member functions.
+Within member functions the properties can be specified. Properties can flags, directories or linked libraries.
+
+\subsection{How would you proceed to optimize code?}
+The most important thing is to try solving the problem. Once that is done and my code works, I would look at the performance.
+If performance can be improved, I would look at ways to do so. I would try parallelizing sections of code, try finding ways to improve the algorithm.
+I would continue doing so until the performance is good.
+
+% (6)
+\section{Assignment}
+
+\subsection{Name some characteristics of the instruction sets: SSE, AVX(2), AVX-512}
+SSE, AVX2, AVX-512 refer to instruction sets on Intel CPUs. They differ in the supported vector length and the number of registers.
+
+SSE: 128-bit vector length, 1999 - 2009 years of launch, 16 registers
+AVX2: 256-bit vector length, 2011 / 2013 years of launch, 16 registers
+AVX-512: 512-bit vector length, 2017 year of launch, 32 registers
+
+CPUs for high-performance computing support AVX-512 instruction set, wehere as modern mainstream CPUs support AVX2 at most.
+
+\subsection{How can memory aliasing affect performance?}
+Memory aliasing occurs when two pointers point to the same memory location.
+The compiler doesn't know if two pointers might point to the same address. 
+To ensure safe optimizations, the compiler always assumes pointer aliasing. 
+Therefore, we can give the compiler hints, to ensure it that no memory aliasing was made.
+This can be done using the restrict keyword (\*\_\_restrict\_\_ for gcc). Memory aliasing is important for pointers as well as references.
+
+\subsection{What are the advantages of unit stride (stride-1) memory access compared to accessing memory with larger strides (for example stride-8)?}
+stride-1 - access sequential elements in memory, where each fields are equally distant. The distance in this case is called stride.
+The difference between stride-1 and larger strides stride-n is that every nth element is accessed.
+
+Stride-1 is faster than larger strides. There is a maximum bandwith that can be loaded from memory. 
+Using larger strides leads to loading a higher bandwidth without fully using it.
+
+We can check this by looking at the summation of two arrays. 
+Summing up every 8th element is more or less as performant as summing up every element of the array.
+
+\subsection{When would you prefer arranging records in memory as a Structure of Arrays?}
+There are two ways to arrange records in memory: as Array of Structures or Structure of Arrays.
+Structure of Arrays: one struct with multiple arrays.
+Array of Structures: one array with the elements for each entry.
+
+For example when we want to save x,y,z coordinates. When using a Structure of Arrays we have one struct and three arrays for each coordinate.
+If we use an Array of Structures we have a struct array with three entries. Each entry stores the values of the x, y, z coordinates.
+
+A Structure of Arrays is good for vectorization. In our example with the coordinates, we can access all the entries of a specific coordinate
+through the respective array.
+With a SoA the arrays are kept seperate for each structure field. Memory access is contiguous if we perform vectorization of the structure instances.
+When performing operations on one array of the structure, SoA leads better bandwidth usage.
+
 %
 % ---- Bibliography ----
 %

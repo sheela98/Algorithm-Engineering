@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "openmp_hint",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "openmp_hint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-openmp_hint-Release-d20f4aec6c7c7276ab3d.json",
+					"name" : "openmp_hint",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/06_Code/hint/cmake-build-release-gcc",
+		"source" : "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/06_Code/hint"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
