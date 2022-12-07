@@ -311,6 +311,40 @@ through the respective array.
 With a SoA the arrays are kept seperate for each structure field. Memory access is contiguous if we perform vectorization of the structure instances.
 When performing operations on one array of the structure, SoA leads better bandwidth usage.
 
+
+% (7)
+\section{Assignment}
+
+\subsection{Explain three vectorization clauses of your choice that can be used with \#pragma omp simd.}
+\#pragma omp simd transform a loop into a SIMD loop.
+
+Vectorization clauses with \#pragma omp simd:
+\begin{itemize}
+	\item safelen - The safelen clause allows to define a boundary for the length of vectors used 
+	within the loop. It is used to ensure the correctness of the program.
+	\item aligned - The aligned clause is used to specify the alignment (for example 64 bytes) for 
+	the pointers used within the loop.
+	notify the compiler within the loop that the pointers 
+	\item collapse - The collapse clause is used to combine multiple for loops into one.
+\end{itemize}
+
+
+\subsection{Give reasons that speak for and against vectorization with intrinsics compared to guided vectorization with OpenMP.}
+Vectorization with intrinsics are used to manage vectorization manually. They are basically wrappers around the corresponding assembly instructions.
+Guided vectorization with OpenMP are easier to use but no guarantee that the compiler can vectorize the codde.
+
+\subsection{What are the advantages of vector intrinsics over assembly code?}
+Vector intrinsics are easier to use than writting assembly code. One vector intrinsic can often include more than one
+assembly instruction. 
+
+\subsection{What are the corresponding vectors of the three intrinsic data types: \_\_m256, \_\_m256d and \_\_m256i.}
+The intrinsic data types can hold floats, doubles or integers. Integer vectors can be interpreted as bytes (8 bits), shorts (16 bits), 
+integers (32 bits), longs (64 bits) or quads (128 bits).
+
+\_\_m256 - a vector of eight 32-bit floating point values
+\_\_m256d - a vector of four 64-bit double values
+\_\_m256i - a vector of signed or unsigned integer values
+
 %
 % ---- Bibliography ----
 %

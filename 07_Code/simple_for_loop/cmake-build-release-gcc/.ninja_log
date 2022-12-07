@@ -1,0 +1,7 @@
+# ninja log v5
+0	1399	1670406302141042323	CMakeFiles/simple_for_loop.dir/simple_for_loop.cpp.o	51da09dfffe00630
+1400	1467	1670406302210518095	simple_for_loop	1a6cf796830fc717
+0	1580	1670408030186800688	CMakeFiles/simple_for_loop.dir/simple_for_loop.cpp.o	51da09dfffe00630
+1580	1667	1670408030275837442	simple_for_loop	1a6cf796830fc717
+1	1521	1670408042569040116	CMakeFiles/simple_for_loop.dir/simple_for_loop.cpp.o	51da09dfffe00630
+1521	1605	1670408042654802078	simple_for_loop	1a6cf796830fc717
