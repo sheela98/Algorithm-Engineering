@@ -341,9 +341,252 @@ assembly instruction.
 The intrinsic data types can hold floats, doubles or integers. Integer vectors can be interpreted as bytes (8 bits), shorts (16 bits), 
 integers (32 bits), longs (64 bits) or quads (128 bits).
 
-\_\_m256 - a vector of eight 32-bit floating point values
-\_\_m256d - a vector of four 64-bit double values
-\_\_m256i - a vector of signed or unsigned integer values
+\begin{itemize}
+	\item \_\_m256 - a vector of eight 32-bit floating point values 
+	\item \_\_m256d - a vector of four 64-bit double values
+	\item \_\_m256i - a vector of signed or unsigned integer values
+\end{itemize}
+
+
+% (8)
+\section{Assignment}
+% Vector intrinsics, performance portable code, manually vectorize algorithms
+
+\subsection{Explain the naming conventions for intrinsic functions.}
+Naming conventions: \_<vector\_size>\_<operations>\_<suffix> \\
+\_<vector\_size> - specifies the size of the vector returned by the intrinsic function \\
+\_<operations> - specifies the operation, like add, sub, mult \\
+\_<suffix> - specifies the data type of the input arguments \\
+Example: \_\_m256d \_mm256\_add\_pd (\_\_m256d a, \_\_m256d b) \\
+Vector size: m256d - 64-bit floating point values \\
+Operation: add - add the corresponding elements of two vectors \\
+Suffix: pd - double precision (epi, epu - signed or unsigned)
+
+\subsection{What do the metrics latency and throughput tell you about the performance of an intrinsic function?}
+% metrics latency and throughput about performance
+Latency is the number of cycles an intrinsic takes until its result is available. 
+Throughput specifies how many cylces it takes to start the next intrinsic function of the same kind.
+Latency and throughput can vary depending on the underlying CPU. For the add intrinsic latency varies from 2 to 4
+and the throughput is 0.5. A latency of 4 means that it takes 4 cycles until the result is available. A throughput of 0.5
+means that within one cycle 2 instructions from the intrinsic can be started. In general there are two units on the CPU to
+compute such functions. Because there are 2 units the throughput is 0.5.
+Within one cycle two add intrinsic functions can be started. It takes up to 4 cycles until a result is available.
+% Software pipelining
+
+\subsection{How do modern processors realize instruction-level parallelism?}
+Instruction-level parallelism (superscalar) refers to several instruction which are being evaluated simultaneously on
+different functional units.
+Multiple instructions can be executed at the same time within a cycle using these different functional units but one CPU core.
+
+\subsection{How may loop unrolling affect the execution time of compiled code?}
+% loop unrolling
+Loop unrolling is a technique to make use of instruction-level parallelism.
+It can be used for scalar or vector operations.
+The body of the loop is replicated and the logic is adjusted. The loop is unrolled by a factor k, 
+which determines the number of times the body is replicated.
+Loop unrolling may lead to an incresed demand for registers depending on the factor used. 
+It can increase compile time, the program size because the body is replicated and loop unrolling needs additional space in the instruction cache.
+Loop unrolling is more affective when using vector instructions to exploit instruction-level parallelism.
+
+\subsection{What does a high IPC value (instructions per cycle) mean in terms of the performance of an algorithm?}
+% high IPC value (instructions per cycle) for performance
+IPC (instructions per cycle) is an aspect of the processors's performance referring to the average number of instructions
+executed in one clock cylce. It is one indication for a systems performance. 
+A high IPC indicates that the CPU is efficiently used.
+To calculate the instructions per cycle the number of instructions is divided by the cycles.
+
+% (9)
+\section{Assignment}
+
+\subsection{How do bandwidth-bound computations differ from compute-bound computations?}
+Bandwith-bound computations have memory access as bottleneck. When loading data main memory is accessed.
+For compute-bound computations the bottleneck is the CPU and main memory or RAM are not accessed.
+When optimizing the cache usage, bandwith-bound computations show more effective results. 
+
+% bandwidth-bound computations - bottleneck memory access
+% Main memory is accessed
+% Elements stored in RAM are accessed
+% When optimizing cache usage, bandwith-bound computations are more effective.
+
+% compute-bound computations - bottleneck CPU
+% Main memory, RAM is not accessed
+% Vector instructoins are more relevant
+
+% SRAM - Cache, latency is lower than DRAM, closer to CPU
+% DRAM - Arbeitsspeicher, loads program data, has to be refreshed periodically
+
+% write programs that make use of the cache effectively and make less use of DRAM 
+
+% Cache line - Intel 64 bytes - 8 double precision values, 16 single precision values, 64 bytes
+% M1 - 128 bytes - 16 double precision values, 32 single precision values, 128 bytes
+
+\subsection{Explain why temporal locality and spatial locality can improve program performance.}
+In modern computers caches are used to reduce the processor-memory gap.
+For this to work programs need to establish good temporal and spatial locality.
+The cache holds elements for the CPU that are often accessed to avoid access to main memory.
+The CPU can access the data directly through the cache.
+Spatial locality means that elements should be stored efficiently. 
+If one element of a cache line is accessed the whole cache line is loaded.
+Therefore, programs should be written in such a way that the other elements are used aswell.
+Everything that is loaded should be used as efficiently as possible.
+Temporal locality means that programs should be written in such a way that the data is used as often as possible.
+Blocking is a mechanism which makes use of temporal locality. 
+The computation is divided into blocks that are united afterwards.
+
+\subsection{What are the differences between data-oriented design and object-oriented design?}
+Data-oriented design (DOD) is a way to design programs that make efficient use of CPU cache. 
+DOD modifies the input to obtain the desired output.
+In object-oriented design everything revolves around the defining, producing and operating on objects.
+Objects interact with each other through functions.
+In data-oriented design functionality and data is seperated. Functions are general purpose,
+It shifts the perspective onto the data and how it is laid out in memory and read from there.
+DOD uses Structures of Arrays (SoA) instead of Array of Structures (AoS) for data that is often used.
+
+\subsection{What are streaming stores?}
+Streaming stores are a way to write data from the CPU directly to random access memory (RAM) and not not through cache.
+Data is not written to cache.
+It can lead to better performance, if the data is not used.
+Another way to use streams is streaming loads to load data directly from RAM to the CPU.
+
+\subsection{Describe a typical cache hierarchy used in Intel CPUs.}
+Modern Intel CPUs typically have an L1 and L2 cache within each core. 
+The L1 cache is divided into an L1 data cache and an L1 instruction cache.
+L2 is the unified cache for data and instructions. \\
+Outside of the CPU cores there is a L3 cache, which is shared by all cores and represents the interface to main memory.
+The caches size goes from the smallest L1 to the largest L3 cache.
+\\
+Each cache can be thought of as a hash table with for example 64 rows. Each row has a number of buckets,
+where each bucket is a cache line with a size of 64 bytes for Intel CPUs.
+
+% Read throughpput: how many MB of data can be moved to the CPU within one second
+
+\subsection{What are cache conflicts?}
+Caches are basically hardware hash tables and as such they suffer from conflicts.
+Each hash bucket can contain N cache lines.
+Cache conflicts occur when more cache lines are put into a bucket than it can hold.
+
+
+% (10)
+\section{Assignment}
+
+\subsection{Name and explain some useful compiler flags during development.}
+\begin{itemize}
+	\item Wall - enables compiler's warning messages
+	\item g - generates debug information
+	\item fsanitize=address - decets out-of-bounds-access, use-after-free and memory leaks
+	\item fsanitize=undefined - detects undefined behavior at runtime
+\end{itemize}
+
+
+\subsection{How could Intel oneAPI help you write better programs?}
+Intel oneAPI is a toolkit containing Intel compilers supporting CPUs,GPUs, FPGAs and other accelerators.
+It provides a cross-architecture programming model including performance libraries, analyzer and debugger tools as well as 
+domain-specific toolkits.
+
+\subsection{What can we learn from the following quote? Premature optimization is the root of all evil (Donald Knuth).}
+Premature optimization refers to blindly optimizing everything without thinking about it.
+It is better to first profile and find bottlenecks that can be optimized.
+The approach shouldn't be to invasive especially in a program written by others.
+It is better to keep things simple.
+
+% (11)
+\section{Assignment}
+
+\subsection{What is Cython?}
+Cython is a superset of Python. 
+It is used for computations that could slow down performance.
+Python code tends to be slow. 
+Cython is used for critical computations to speed up perfromance.
+It is an interface with C and C++ libraries.
+
+\subsection{Describe an approach how Python programs can be accelerated with the help of Cython.}
+
+\subsection{Describe two ways for compiling a .pyx Cython module.}
+To compile a .pyx Cython module the command cythonize can be used. 
+It compiles the file into a C/C++ file.
+After that the file is compiled into an extension module that is importable from Python.
+\\
+Another way to compile a .pyx file is to use pyximport. 
+This is used to automatically recompile and reload the module.
+The line "import pyximport" and "pyximport.install()" is used at the start of the Python script.
+
+\subsection{Name and describe two compiler directives in Cython.}
+% cython: language_level = 3
+% cython: boundscheck = False
+% cython: wraparound = False
+% cytho: cdivision = True
+
+\subsection{What is the difference between, def, cdef, and cpdef when declaring a Cython function?}
+\begin{itemize}
+	\item def - normal python function
+	\item cdef - can be called only in cython
+	\item cpdef - can be called in cython and python
+\end{itemize}
+
+\subsection{What are typed memoryviews especially useful for in Cython?}
+Memoryviews are useful for passing Python of Numpy arrays to Cython.
+
+
+% (12)
+\section{Assignment}
+
+\subsection{What are extension types in the context of Python?}
+Extension types in can be used to wrap C / C++ code looking like Python objects.
+They can be used to boost performance. Cython makes it easy to create extension types.
+
+\subsection{How do extension types data fields in Cython differ from data fields in Python classes?}
+Extension type data fileds in Cython can be accessed only within Cython code.
+To access fields from Python an access level - readonly of public - for that field has to be provided.
+
+\subsection{Give a simple description of how to wrap C / C++ code in cython?}
+We have a C / C++ library we want to use in Pythong. 
+In our Python code we include the library using \#include "pi.h".
+In Cython we describe all we need with compiler directives.
+
+
+% (13)
+\section{Assignment}
+
+\subsection{Delimit from each other the following SSD parts: Cells, Pages and Blocks.}
+In SSDs cells are used to store digital bits. 
+Cells are NAND based and can store from one to four bits depending on the type of NAND.
+A group of cells forms a page. The smallest unit to read or write with SSDs is a page.
+It can only be written once. This means that there are no operations to overwrite a page.
+When data is updated it is written to another page. 
+The old page is marked as invalid until it is erased.
+Blocks are usually 512KB, 1MB (about 128 or 256 pages). The smallest unit to erase is a block.
+
+\subsection{What is the purpose of garbage collection in SSDs?}
+A block contains pages. The number of invalid pages is compared to a threshold. 
+If it exceeds the threshold, the block is claimed by garbage collection.
+Furthermore, garbage collection moves related data segments next to each other.
+
+\subsection{What is the purpose of wear leveling in SSDs?}
+War leveling is used to prolong the life of an SSD.
+
+\subsection{Tell some interesting things about SSDs with an M.2 form factor.}
+The Host Interface provides an interface between host and SSD, such as PCI, SATA or SAS.
+To efficiently communicate with the interface the protocol AHCI or NVMe is used.
+NVMe protocols are more efficiently with SATA interface.
+The M.2 form factor exists for PCIe and SATA interfaces.
+It has multiple key slots, which have to be checked for compatibility.
+Performance is higher for write operations than read operations.
+
+
+\subsection{What influence do garbage collection and wear leveling have on write amplification of an SSD?}
+Write amplification happens when writing data and the data to write is multiplied into a disproportional amount of data on the SSD.
+Garbage collection and wear levelling can increase write amplification.
+
+\subsection{Discuss three different recommendations for writing code for SSDs.}
+When writing code for SSDs it is important to avoid scattered updates and use compact data structures.
+Additionally, for large IO, only a few threads suffice to achieve maximum performance.
+
+\subsection{How could the CPU load for IO be reduced?}
+To reduce CPU load one can use asynchronous IO system calls instead of blocking ones.
+Furthermore, the OS buffering has to be diabled.
+
+\subsection{How could you solve problems that do not fit in DRAM without major code adjustments?}
+To solve such problems one can use memory mapped files on flash.
 
 %
 % ---- Bibliography ----
