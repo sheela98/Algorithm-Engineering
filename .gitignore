@@ -1,0 +1,12 @@
+# Ignored files
+.gitignore
+
+.DS_Store
+*.txt
+*.cls
+*.aux
+*.fdp_latexmk
+*.fls
+*.log
+*.gz
+Assignments/paper.fdb_latexmk
