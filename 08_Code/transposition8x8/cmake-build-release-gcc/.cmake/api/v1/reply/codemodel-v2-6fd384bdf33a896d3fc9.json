@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.9"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "transposition8x8",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "transposition8x8::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-transposition8x8-Release-b2483955366fd08a12ad.json",
+					"name" : "transposition8x8",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/08_Code/transposition8x8/cmake-build-release-gcc",
+		"source" : "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/08_Code/transposition8x8"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

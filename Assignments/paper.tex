@@ -28,53 +28,50 @@
 \section{Assignment}
 
 \subsection{Describe how parallelism differs from concurrency}
-Parallelism is a subset of concurrency. If a system is parallel it is also concurrent, but not the other way around. 
-A system is considered parallel if two or more tasks are executed simultaneously.
-\\
-Concurrency only means support for two or more actions at the same time. 
-Parallelism refers to execution of more than one action at the same time.
+Concurrency refers to two or more tasks being executed, but not simultaenously. 
+Parallelism is about the exection of multiple tasks at the same time.
+Parallelism is a subset of concurrency. If a system is parallel it is also concurrent, but not the other way around.
 
 \subsection{What is fork-join parallelism?}
-Fork-join parallelism refers to a concept where we have a master thread that divides into a team of threads. 
-With this concept we only have parallel regions where threads are executed simultaneously. 
+Fork-join parallelism is a concept where we have a master thread that divides into more threads. 
+This opens a parallel regions allowing simultaneous excecution.
 In between these parallel regions the execution is sequential following the master thread. 
 \\
 We can imagine execution as a line that is followed from starting to end point. 
 With fork-join parallelism this line is our master thread. 
-Following our master thread at some point the thread can divide into two or more threads. 
+Following our master thread at some point the thread divides into two or more threads. 
 These threads are joined after some time to our master thread. 
-In these sections where we have two or more threads execution will be parallel and after these sections sequential. 
+In these sections where we have two or more threads, execution will be parallel and after these sections sequential. 
 
 
 \subsection {Chapter 1 – Computer Systems: A Programmer’s Perspective}
 
 \paragraph{Discuss one thing - Caches}
-As discussed in Chapter 1 of the book caches are helpful to deal with the processor-memory gap. 
-
+As explained in Chapter 1 of the book "Computer Systems: A Programmer’s Perspective" caches are helpful to deal with the processor-memory gap. 
+The processor-memory gap refers to the difference in performance between processor and memory.
 The processor can read data from the register file, which is within the CPU almost 100 times faster than from memory. 
 The gap between processor and memory is continuously growing. 
-
+\\
 Cache memory is used to bridge the gap. It is used to temporarily store information that will likely be used in the future. 
-There exist several levels of caches -  L1, L2, L3 - which go from smallest to largest. 
-
+There are several levels of cache -  L1, L2, L3 - which go from smallest to largest. 
 A cache reduces the acess time to data in memory. Frequently used data and instructions are kept in the cache. 
-Access to data kept there is faster.
-
+Accessing data from the cache is faster.
+\\
 Modern desktops, servers and industrial CPUs have at least three independent caches: instruction cache, data cache and the TLB. 
 The instruction cache is used to speed up executable instruction fetches. The data cache speeds up data fetch and store. 
 It is organized into more cache levels:
 \begin{itemize}
-	\item L1 cache - Primary cache is fast but small and usually embedded in the processor chip (CPU)
-	\item L2 cache - Secondary cache is larger and can be embedded in the CPU or on a seperate chip or coprocessor containing 
-	a high-speed alternative system bus connectin cache and CPU.
-	\item L3 cache - specialized memory to improve L1 and L2. L3 is usually double the speed of DRAM
+	\item L1 cache or primary cache is fast but small and usually embedded in the processor chip (CPU).
+	\item L2 cache or secondary cache is larger and can be embedded in the CPU or on a seperate chip or coprocessor containing 
+	a high-speed alternative system bus connecting cache and CPU.
+	\item L3 cache is used to improve L1 and L2. L3 is usually double the speed of DRAM.
 \end{itemize}
 The small caches L1 are backed up by larger and slower caches L2, L3 to address the tradeoff between cache latency and hit rate. 
-The faster cache is generally checked firt. If that cache misses, the next chache is checked and so on, before accessing main memory.
-
+The faster cache is generally checked first. If that cache misses, the next chache is checked and so on before accessing main memory.
+\\
 For example the ARM-base Apple M1 CPU has 8 cores: 4 high-performance and four high-efficiency cores. 
 The four high-performance cores have a 192 KiB L1 cache for each of the cores and the four high-efficiency cores only have 128 KiB.
-
+\\
 The Translation lookaside buffer is used to speed up the translation from virtual to physical addresses. 
 It is part of the memory management unit and not directly related to CPU caches.
 
@@ -85,7 +82,7 @@ It is part of the memory management unit and not directly related to CPU caches.
 
 \paragraph{Explain figure “Performance gains after Moore’s law ends”}
 The figure illustrates the “Top” and “Bottom” referring to computer performance gains. 
-The “Bottom” refers to the miniaturization of computer components seen in the last decades. \\
+The “Bottom” is about the miniaturization of computer components seen in the last decades. \\
 Due to physical limits the opportunities for gains at the bottom will slowly come to an end.
  Nevertheless, there are still opportunities for growth at the “Top”. 
  The “Top” shows the three aspects where growth can be expected: software, algorithms, hardware architecture. 
@@ -121,12 +118,13 @@ Race conditions occur when two threads modify the same data. Mutual exclusions g
 After execution exclusive access is returned and the next thread can execute.
 
 \subsection{Explain the differences betweent static and dynamic schedules in OpenMP.}
-Static and dynamic schedules differ in how the work \( iterations of the for loop \)) is spread across the threads. 
-Static means that it is decided at the beginning and dynamic means that it is decided at runtime. 
+Static and dynamic schedules differ in how the work (iterations of the for loop) is spread between threads. 
+\\
+Static schedules decide at the beginning and dynamic means that it is decided at runtime. 
 Each thread will work on a chunk of values and then take the next chunk that hasn't been worked on by any thread.
 Static schedules perform better for balanced workloads and dynamic schedules for unbalanced workloads, 
 in case the workload varies between different iterations of the for loop.
-The chunk size can be specifies; for static schedules it is one per default.
+The chunk size can be specified; for static schedules it is one per default.
 
 \subsection{What can we do if we've found a solution while running a parallel for loop in OpenMP, but still have many iterations left?}
 If we've found a solution within a parallel for loop, we can use continue. We don't continue calculating, 
@@ -135,16 +133,15 @@ but quickly iterate through the loop to increase performance.
 
 \subsection{Explain in your own words how std::atomic::compare\_exchange\_weak work}
 strd::atomic::compare\_exchange\_weak  succeeds only if the value of the variable to be updated equals the first provided argument.
-For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution equals to previous. 
+For example if for final\_solution.compare\_exchange\_weak(previous, i) final\_solution is equal to previous. 
 Previous is updated with i, if it fails.
 
 % (3)
 \section{Assignment}
 
 \subsection{How does ordered clause in OpenMP work in conjunction with a parallel loop?}
-An ordered clause is used within a parallel region. It opens a region where the execution is sequential, 
-in order to prevent race conditions.
-
+An ordered clause is used within a parallel region. It opens a region where the execution is sequential. 
+It is used to prevent race conditions.
 
 \subsection{What is the collapse clause in OpenMP good for?}
 The collapse clause is used to parallelize for loops. It allows to specify how many loops are collapsed into one. 
@@ -153,9 +150,10 @@ When using the collapse clause a single loop is formed. The length of the new lo
 of the length of each loop that has to be collapsed into one.
 
 \subsection{Explain how reductions work internally in OpenMP}
-A reduction is an operation form OpenMP that is used in parallel computing. 
-It reduces the calues into a single result.
-The syntax of the operation is: \lstinline{reduction(op:list)}. op refers to the operation, which can be +, -, *, and so on. 
+A reduction is an operation from OpenMP that is used in parallel computing. 
+It reduces the values into a single result.
+The syntax of the operation is: \lstinline{reduction(op:list)}. 
+op refers to the operation (addition, subtraction, and so on). 
 list refers to a list of variables that is reduced.
 For example: A reduction can be used within a parallel for loop: 
 \lstinline{#pragma omp parallel for reduction(+ : sum) } to compute the sum of the values 1, 2, 3. 
@@ -163,32 +161,36 @@ Every thread within the parallel region gets a local sum variable, where the sum
 The result will be written to the global sum variable declared outside of the parallel region.
 
 \subsection{What is the purpose of a barrier in parallel computing?}
-A barrier can be set within a parallel region. Setting a barrier means that the threads will execute the code until that specific barrier. 
-There they wait until all threads have reached the barrier and only then continue with execution.
+A barrier can be set within a parallel region. 
+Setting a barrier means that the threads will execute the code up to that specific barrier, which is a specific point in execution. 
+At this point the threads wait until all have reached the barrier and only then continue with execution.
 Barriers are used for synchronization in parallel regions, where they enforce a specific execution order. \\
 Within OpenMP there are also implicit barriers. The most general barrier is the omp parallel region itself. 
 The region makes sure that execution is parallel within that region. 
 After the code from that region is executed in parallel execution will continue sequentially. 
 
 \subsection{Explain the difference between the library routines: omp\_get\_num\_threads(), omp\_get\_num\_procs() and omp\_get\_max\_threads().}
-\begin{itemize}
-	\item omp\_get\_num\_threads() - 
-	The routine is called inside a parallel region. It is used to get the number of threads used within a parallel region.
-	\item omp\_get\_num\_procs() - 
-	The routine is used to get the number of logical cored. It can be used to define the number of threads reasonable to use 
-	in a parallel region. Per default the number of threads is equal to the number of logical cores.
-	\item omp\_get\_max\_threads() - 
-	The routine is called outside a parallel region and returns the number of threads supported in a parallel region. 
-	When the value is changed with omp\_set\_num\_threads() within a parallel region, the method returns the set value.
-\end{itemize}
+omp\_get\_num\_threads():
+The routine is called inside a parallel region. 
+It is used to get the number of threads used within a parallel region.
+\\
+omp\_get\_num\_procs():
+The routine is used to get the number of logical cores. 
+It can be used to define the number of threads reasonable to use in a parallel region. 
+Per default the number of threads is equal to the number of logical cores.
+\\
+omp\_get\_max\_threads():
+The routine is called outside a parallel region and returns the number of threads supported in a parallel region. 
+When the value is changed with omp\_set\_num\_threads() within a parallel region, the method returns the set value.
+
 
 \subsection{Clarify how the storage attributes private and firstprivate differ from each other.}
 Storage attributes are used to specify the usage of variables within a parallel region. 
 It is used for variables declared outside a parallel region.
 There are three different storage attributes: shared, firstprivate and private.
-
+\\
 Private attributes make sure that each thread gets an uninitialized copy of the variable.
-Firstprivate attributes make sure that eacht thrad gets an identical initialized copy of the variable. 
+Firstprivate attributes make sure that each thread gets an identical initialized copy of the variable. 
 The variable is a local variable for each thread.
 When using private or firstprivate storage attributes the value of the global variable remains unchanged.
 
@@ -219,16 +221,18 @@ When using private or firstprivate storage attributes the value of the global va
 \subsection{Explain how divide and conquer algorithms can be parallelized with tasks in OpenMP.}
 Divide and conquer algorithms recursively split down a problem until the pieces can be directly solved.
 Such algorithms can be paralleized in OpenMP using the constructs taks and taskwait for the recursive call.
-OpenMP tasks are independent work blocks. A queueing system dynamically handles the assignment of threads to the tasks. 
-Each threads picks up a task from the queue and executes it. This goes on until the queue is empty. 
+OpenMP tasks are independent work blocks. 
+A queueing system dynamically handles the assignment of threads to the tasks. 
+Each thread picks up a task from the queue and executes it. 
+This goes on until the queue is empty. 
 Tasks are defined within a parallel region and within a single construct, to make sure that one thread creates the tasks.
 Taskwait is a construct that waits until all tasks are executed.
 
 \subsection{Describe some ways to speed up merge sort.}
 \begin{itemize}
-	\item Tasks - With task and taskwait
+	\item Tasks - with task and taskwait
 	\item Avoid copying - to prevent that additional memory is created recursively and make sure that initially memory 
-	is instantiated and reused.
+	is instantiated and reused
 	\item if Clause - task will only be created, if a certain condition is true
 	\item final Clause - tasks won't be created anymore, if a condition is true
 \end{itemize}
@@ -246,10 +250,10 @@ The order of written code can be changed as compiler try to optimize it and rewr
 RAM hasn’t speeded up the way CPU processors have. This creates a widening gap between the instruction fetch and the time 
 needed to retrieve data from memory.
 To prevent reordering we can use atomic types in C or C++.
-
+\\
 Atomicity means that something can’t be divided into smaller pieces. Threads need to use atomic reads and writes to share data. 
 If they are not atomic they are so-called torn reads and writes.
-To ensure atomicity one need to make sure that variables used for thread synchronization aren’t larger than the CPU word size.
+To ensure atomicity one needs to make sure that variables used for thread synchronization aren’t larger than the CPU word size.
 
 % (5)
 \section{Assignment}
@@ -259,13 +263,15 @@ CMake is a script language used to create build files that can be executed acros
 The build files are executed using a compiler. CMake provides tools to build, test and package software.
 
 \subsection{What role do targets play in CMake?}
-Targets define what is build. They are executables and libraries.
+Targets define what is built. They are executables and libraries.
 Targets have constructors to build executables, libraries or tests.
-Targets can be thought of as objects with different properties. To change these properties we can use member functions.
-Within member functions the properties can be specified. Properties can flags, directories or linked libraries.
+Targets can be thought of as objects with different properties. 
+To change these properties we can use member functions.
+Within member functions the properties can be specified. 
+Properties can be flags, directories or linked libraries.
 
 \subsection{How would you proceed to optimize code?}
-The most important thing is to try solving the problem. Once that is done and my code works, I would look at the performance.
+The most important thing is to try solving the problem. Once that is done and the code works, I would look at the performance.
 If performance can be improved, I would look at ways to do so. I would try parallelizing sections of code, try finding ways to improve the algorithm.
 I would continue doing so until the performance is good.
 
@@ -273,28 +279,31 @@ I would continue doing so until the performance is good.
 \section{Assignment}
 
 \subsection{Name some characteristics of the instruction sets: SSE, AVX(2), AVX-512}
-SSE, AVX2, AVX-512 refer to instruction sets on Intel CPUs. They differ in the supported vector length and the number of registers.
-
+SSE, AVX2, AVX-512 are instruction sets on Intel CPUs. They differ in the supported vector length and the number of registers.
+\\
 SSE: 128-bit vector length, 1999 - 2009 years of launch, 16 registers
+\\
 AVX2: 256-bit vector length, 2011 / 2013 years of launch, 16 registers
+\\
 AVX-512: 512-bit vector length, 2017 year of launch, 32 registers
-
-CPUs for high-performance computing support AVX-512 instruction set, wehere as modern mainstream CPUs support AVX2 at most.
+\\
+CPUs for high-performance computing support the AVX-512 instruction set, wehereas modern mainstream CPUs support AVX2 at most.
 
 \subsection{How can memory aliasing affect performance?}
 Memory aliasing occurs when two pointers point to the same memory location.
 The compiler doesn't know if two pointers might point to the same address. 
 To ensure safe optimizations, the compiler always assumes pointer aliasing. 
-Therefore, we can give the compiler hints, to ensure it that no memory aliasing was made.
-This can be done using the restrict keyword (\*\_\_restrict\_\_ for gcc). Memory aliasing is important for pointers as well as references.
+Therefore, we can give the compiler hints, to ensure that no memory aliasing was made.
+This can be done using the restrict keyword (\*\_\_restrict\_\_ for gcc). 
+Memory aliasing is important for pointers as well as references.
 
 \subsection{What are the advantages of unit stride (stride-1) memory access compared to accessing memory with larger strides (for example stride-8)?}
-stride-1 - access sequential elements in memory, where each fields are equally distant. The distance in this case is called stride.
+stride-1 - access sequential elements in memory, where all of the fields are equally distant to one another. The distance in this case is called stride.
 The difference between stride-1 and larger strides stride-n is that every nth element is accessed.
-
+\\
 Stride-1 is faster than larger strides. There is a maximum bandwith that can be loaded from memory. 
 Using larger strides leads to loading a higher bandwidth without fully using it.
-
+\\
 We can check this by looking at the summation of two arrays. 
 Summing up every 8th element is more or less as performant as summing up every element of the array.
 
@@ -302,43 +311,45 @@ Summing up every 8th element is more or less as performant as summing up every e
 There are two ways to arrange records in memory: as Array of Structures or Structure of Arrays.
 Structure of Arrays: one struct with multiple arrays.
 Array of Structures: one array with the elements for each entry.
-
-For example when we want to save x,y,z coordinates. When using a Structure of Arrays we have one struct and three arrays for each coordinate.
-If we use an Array of Structures we have a struct array with three entries. Each entry stores the values of the x, y, z coordinates.
-
+\\
+For example when we want to save the x, y and z coordinates. When using a Structure of Arrays we have one struct and three arrays for each coordinate.
+If we use an Array of Structures we have a struct array with three entries. 
+Each entry storing the values of the x, y and z coordinates.
+\\
 A Structure of Arrays is good for vectorization. In our example with the coordinates, we can access all the entries of a specific coordinate
 through the respective array.
 With a SoA the arrays are kept seperate for each structure field. Memory access is contiguous if we perform vectorization of the structure instances.
-When performing operations on one array of the structure, SoA leads better bandwidth usage.
+When performing operations on one array of the structure a SoA leads to better bandwidth usage.
 
 
 % (7)
 \section{Assignment}
 
 \subsection{Explain three vectorization clauses of your choice that can be used with \#pragma omp simd.}
-\#pragma omp simd transform a loop into a SIMD loop.
-
-Vectorization clauses with \#pragma omp simd:
+\#pragma omp simd transforms a loop into a SIMD loop.
+\\
+Some vectorization clauses with \#pragma omp simd are:
 \begin{itemize}
 	\item safelen - The safelen clause allows to define a boundary for the length of vectors used 
 	within the loop. It is used to ensure the correctness of the program.
 	\item aligned - The aligned clause is used to specify the alignment (for example 64 bytes) for 
 	the pointers used within the loop.
-	notify the compiler within the loop that the pointers 
 	\item collapse - The collapse clause is used to combine multiple for loops into one.
 \end{itemize}
 
 
 \subsection{Give reasons that speak for and against vectorization with intrinsics compared to guided vectorization with OpenMP.}
-Vectorization with intrinsics are used to manage vectorization manually. They are basically wrappers around the corresponding assembly instructions.
-Guided vectorization with OpenMP are easier to use but no guarantee that the compiler can vectorize the codde.
+Vectorization with intrinsics is used to manage vectorization manually. 
+It is basically wrappers around the corresponding assembly instructions.
+\\
+Guided vectorization with OpenMP is easier to use but there is no guarantee that the compiler can vectorize the code.
 
 \subsection{What are the advantages of vector intrinsics over assembly code?}
-Vector intrinsics are easier to use than writting assembly code. One vector intrinsic can often include more than one
+Vector intrinsics are easier to use than writing assembly code. One vector intrinsic often consists of more than one
 assembly instruction. 
 
 \subsection{What are the corresponding vectors of the three intrinsic data types: \_\_m256, \_\_m256d and \_\_m256i.}
-The intrinsic data types can hold floats, doubles or integers. Integer vectors can be interpreted as bytes (8 bits), shorts (16 bits), 
+The intrinsic data types can hold floats, doubles or integers. Vectors can be interpreted as bytes (8 bits), shorts (16 bits), 
 integers (32 bits), longs (64 bits) or quads (128 bits).
 
 \begin{itemize}
@@ -353,10 +364,14 @@ integers (32 bits), longs (64 bits) or quads (128 bits).
 % Vector intrinsics, performance portable code, manually vectorize algorithms
 
 \subsection{Explain the naming conventions for intrinsic functions.}
-Naming conventions: \_<vector\_size>\_<operations>\_<suffix> \\
-\_<vector\_size> - specifies the size of the vector returned by the intrinsic function \\
-\_<operations> - specifies the operation, like add, sub, mult \\
-\_<suffix> - specifies the data type of the input arguments \\
+
+Naming conventions: \_<vector\_size>\_<operations>\_<suffix>
+
+\begin{itemize}
+	\item \_<vector\_size>: specifies the size of the vector returned by the intrinsic function
+	\item \_<operations>: specifies the operation, like add, sub, mult
+	\item \_<suffix>: specifies the data type of the input arguments
+\end{itemize}
 Example: \_\_m256d \_mm256\_add\_pd (\_\_m256d a, \_\_m256d b) \\
 Vector size: m256d - 64-bit floating point values \\
 Operation: add - add the corresponding elements of two vectors \\
@@ -366,15 +381,17 @@ Suffix: pd - double precision (epi, epu - signed or unsigned)
 % metrics latency and throughput about performance
 Latency is the number of cycles an intrinsic takes until its result is available. 
 Throughput specifies how many cylces it takes to start the next intrinsic function of the same kind.
-Latency and throughput can vary depending on the underlying CPU. For the add intrinsic latency varies from 2 to 4
-and the throughput is 0.5. A latency of 4 means that it takes 4 cycles until the result is available. A throughput of 0.5
-means that within one cycle 2 instructions from the intrinsic can be started. In general there are two units on the CPU to
-compute such functions. Because there are 2 units the throughput is 0.5.
-Within one cycle two add intrinsic functions can be started. It takes up to 4 cycles until a result is available.
+Latency and throughput can vary depending on the underlying CPU. For the add intrinsic latency varies from two to four
+and the throughput is 0.5. A latency of four means that it takes four cycles until the result is available. A throughput of 0.5
+means that within one cycle two instructions from the intrinsic can be started. 
+\\
+In general there are two units on the CPU to
+compute such functions. Because there are two units the throughput is 0.5.
+Within one cycle two add intrinsic functions can be started. It takes up to four cycles until a result is available.
 % Software pipelining
 
 \subsection{How do modern processors realize instruction-level parallelism?}
-Instruction-level parallelism (superscalar) refers to several instruction which are being evaluated simultaneously on
+Instruction-level parallelism (superscalar) refers to several instructions which are being evaluated simultaneously on
 different functional units.
 Multiple instructions can be executed at the same time within a cycle using these different functional units but one CPU core.
 
@@ -382,16 +399,17 @@ Multiple instructions can be executed at the same time within a cycle using thes
 % loop unrolling
 Loop unrolling is a technique to make use of instruction-level parallelism.
 It can be used for scalar or vector operations.
-The body of the loop is replicated and the logic is adjusted. The loop is unrolled by a factor k, 
-which determines the number of times the body is replicated.
+The body of the loop is replicated and the logic is adjusted accordingly. 
+The loop is unrolled by a factor k, which determines the number of times the body is replicated.
+\\
 Loop unrolling may lead to an incresed demand for registers depending on the factor used. 
-It can increase compile time, the program size because the body is replicated and loop unrolling needs additional space in the instruction cache.
-Loop unrolling is more affective when using vector instructions to exploit instruction-level parallelism.
+It can increase compile time and the program size because the body is replicated and additional space in the instruction cache is needed.
+Loop unrolling is more effective when using vector instructions to exploit instruction-level parallelism.
 
 \subsection{What does a high IPC value (instructions per cycle) mean in terms of the performance of an algorithm?}
 % high IPC value (instructions per cycle) for performance
 IPC (instructions per cycle) is an aspect of the processors's performance referring to the average number of instructions
-executed in one clock cylce. It is one indication for a systems performance. 
+executed in one clock cylce. It an indication for the systems performance. 
 A high IPC indicates that the CPU is efficiently used.
 To calculate the instructions per cycle the number of instructions is divided by the cycles.
 
@@ -425,26 +443,27 @@ In modern computers caches are used to reduce the processor-memory gap.
 For this to work programs need to establish good temporal and spatial locality.
 The cache holds elements for the CPU that are often accessed to avoid access to main memory.
 The CPU can access the data directly through the cache.
+\\
 Spatial locality means that elements should be stored efficiently. 
 If one element of a cache line is accessed the whole cache line is loaded.
 Therefore, programs should be written in such a way that the other elements are used aswell.
 Everything that is loaded should be used as efficiently as possible.
+\\
 Temporal locality means that programs should be written in such a way that the data is used as often as possible.
 Blocking is a mechanism which makes use of temporal locality. 
 The computation is divided into blocks that are united afterwards.
 
 \subsection{What are the differences between data-oriented design and object-oriented design?}
-Data-oriented design (DOD) is a way to design programs that make efficient use of CPU cache. 
+Data-oriented design (DOD) is a way to design programs that make efficient use of the CPU cache. 
 DOD modifies the input to obtain the desired output.
-In object-oriented design everything revolves around the defining, producing and operating on objects.
+In object-oriented design everything revolves around defining, producing and operating on objects.
 Objects interact with each other through functions.
-In data-oriented design functionality and data is seperated. Functions are general purpose,
+In data-oriented design functionality and data is seperated. Functions are general purpose.
 It shifts the perspective onto the data and how it is laid out in memory and read from there.
 DOD uses Structures of Arrays (SoA) instead of Array of Structures (AoS) for data that is often used.
 
 \subsection{What are streaming stores?}
-Streaming stores are a way to write data from the CPU directly to random access memory (RAM) and not not through cache.
-Data is not written to cache.
+Streaming stores are a way to write data from the CPU directly to random access memory (RAM) and not through cache.
 It can lead to better performance, if the data is not used.
 Another way to use streams is streaming loads to load data directly from RAM to the CPU.
 
@@ -452,11 +471,11 @@ Another way to use streams is streaming loads to load data directly from RAM to 
 Modern Intel CPUs typically have an L1 and L2 cache within each core. 
 The L1 cache is divided into an L1 data cache and an L1 instruction cache.
 L2 is the unified cache for data and instructions. \\
-Outside of the CPU cores there is a L3 cache, which is shared by all cores and represents the interface to main memory.
+Outside of the CPU cores there is an L3 cache, which is shared by all cores and represents the interface to main memory.
 The caches size goes from the smallest L1 to the largest L3 cache.
 \\
 Each cache can be thought of as a hash table with for example 64 rows. Each row has a number of buckets,
-where each bucket is a cache line with a size of 64 bytes for Intel CPUs.
+where each bucket is a cache line. The size for a cache line for Intel CPUs is 64 bytes.
 
 % Read throughpput: how many MB of data can be moved to the CPU within one second
 
@@ -473,20 +492,20 @@ Cache conflicts occur when more cache lines are put into a bucket than it can ho
 \begin{itemize}
 	\item Wall - enables compiler's warning messages
 	\item g - generates debug information
-	\item fsanitize=address - decets out-of-bounds-access, use-after-free and memory leaks
+	\item fsanitize=address - detects out-of-bounds-access, use-after-free and memory leaks
 	\item fsanitize=undefined - detects undefined behavior at runtime
 \end{itemize}
 
 
 \subsection{How could Intel oneAPI help you write better programs?}
-Intel oneAPI is a toolkit containing Intel compilers supporting CPUs,GPUs, FPGAs and other accelerators.
+Intel oneAPI is a toolkit containing Intel compilers supporting CPUs, GPUs, FPGAs and other accelerators.
 It provides a cross-architecture programming model including performance libraries, analyzer and debugger tools as well as 
 domain-specific toolkits.
 
 \subsection{What can we learn from the following quote? Premature optimization is the root of all evil (Donald Knuth).}
 Premature optimization refers to blindly optimizing everything without thinking about it.
 It is better to first profile and find bottlenecks that can be optimized.
-The approach shouldn't be to invasive especially in a program written by others.
+The approach shouldn't be too invasive especially in a program written by others.
 It is better to keep things simple.
 
 % (11)
@@ -514,7 +533,7 @@ The line "import pyximport" and "pyximport.install()" is used at the start of th
 % cython: language_level = 3
 % cython: boundscheck = False
 % cython: wraparound = False
-% cytho: cdivision = True
+% cython: cdivision = True
 
 \subsection{What is the difference between, def, cdef, and cpdef when declaring a Cython function?}
 \begin{itemize}
@@ -531,7 +550,7 @@ Memoryviews are useful for passing Python of Numpy arrays to Cython.
 \section{Assignment}
 
 \subsection{What are extension types in the context of Python?}
-Extension types in can be used to wrap C / C++ code looking like Python objects.
+Extension types can be used to wrap C / C++ code looking like Python objects.
 They can be used to boost performance. Cython makes it easy to create extension types.
 
 \subsection{How do extension types data fields in Cython differ from data fields in Python classes?}
@@ -539,7 +558,7 @@ Extension type data fileds in Cython can be accessed only within Cython code.
 To access fields from Python an access level - readonly of public - for that field has to be provided.
 
 \subsection{Give a simple description of how to wrap C / C++ code in cython?}
-We have a C / C++ library we want to use in Pythong. 
+We have a C / C++ library we want to use in Python. 
 In our Python code we include the library using \#include "pi.h".
 In Cython we describe all we need with compiler directives.
 
@@ -549,7 +568,7 @@ In Cython we describe all we need with compiler directives.
 
 \subsection{Delimit from each other the following SSD parts: Cells, Pages and Blocks.}
 In SSDs cells are used to store digital bits. 
-Cells are NAND based and can store from one to four bits depending on the type of NAND.
+Cells are NAND-based and can store from one to four bits depending on the type of NAND.
 A group of cells forms a page. The smallest unit to read or write with SSDs is a page.
 It can only be written once. This means that there are no operations to overwrite a page.
 When data is updated it is written to another page. 
@@ -568,7 +587,7 @@ War leveling is used to prolong the life of an SSD.
 The Host Interface provides an interface between host and SSD, such as PCI, SATA or SAS.
 To efficiently communicate with the interface the protocol AHCI or NVMe is used.
 NVMe protocols are more efficiently with SATA interface.
-The M.2 form factor exists for PCIe and SATA interfaces.
+The M.2 form factor exists for both, PCIe and SATA interfaces.
 It has multiple key slots, which have to be checked for compatibility.
 Performance is higher for write operations than read operations.
 
