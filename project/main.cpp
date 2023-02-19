@@ -154,7 +154,7 @@ int main() {
 
     // Median Filter
     int filterSize = 3;
-    medianFilter("input.ppm", "output.ppm", width, height, filterSize);
+    medianFilter("img.ppm", "output.ppm", width, height, filterSize);
     //
 
     fclose(read);
