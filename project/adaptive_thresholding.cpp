@@ -13,28 +13,26 @@
 
 using namespace std;
 
-int main()
-{
+
+void adaptive_thresholding(const char *input_image, const char *output_image, int blockSize, int threshold_offset) {
     // Load the PGM image
-    FILE* inputFile = fopen("image.pgm", "rb");
+    FILE* inputFile = fopen(input_image, "rb");
     if (!inputFile) {
         cerr << "Error: Could not open input file." << endl;
-        return 1;
+        return;
     }
     char format[3];
     int width, height, maxVal;
     fscanf(inputFile, "%2s %d %d %d", format, &width, &height, &maxVal);
     if (strcmp(format, "P5") != 0) {
         cerr << "Error: Invalid PGM format." << endl;
-        return 1;
+        return;
     }
     vector<unsigned char> imageData(width * height);
     fread(imageData.data(), sizeof(unsigned char), width * height, inputFile);
     fclose(inputFile);
 
     // Apply adaptive thresholding
-    int blockSize = 31;
-    int C = 15;
     vector<unsigned char> thresholdedData(width * height);
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
@@ -49,20 +47,28 @@ int main()
                 }
             }
             int mean = sum / count;
-            int threshold = mean - C;
+            int threshold = mean - threshold_offset;
             thresholdedData[y * width + x] = imageData[y * width + x] > threshold ? 255 : 0;
         }
     }
 
     // Save the thresholded image
-    FILE* outputFile = fopen("output2.pgm", "wb");
+    FILE* outputFile = fopen(output_image, "wb");
     if (!outputFile) {
         cerr << "Error: Could not open output file." << endl;
-        return 1;
+        return;
     }
     fprintf(outputFile, "P5\n%d %d\n%d\n", width, height, maxVal);
     fwrite(thresholdedData.data(), sizeof(unsigned char), width * height, outputFile);
     fclose(outputFile);
+
+}
+
+int main()
+{
+    const char *input_image = "images/image.pgm";
+    const char *output_image = "images/output.pgm";
+    adaptive_thresholding(input_image, output_image, 31, 15);
 
     return 0;
 }
