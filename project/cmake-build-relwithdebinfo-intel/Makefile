@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+otsu.o: otsu.cpp.o
+.PHONY : otsu.o
+
+# target to build an object file
+otsu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/otsu.cpp.o
+.PHONY : otsu.cpp.o
+
+otsu.i: otsu.cpp.i
+.PHONY : otsu.i
+
+# target to preprocess a source file
+otsu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/otsu.cpp.i
+.PHONY : otsu.cpp.i
+
+otsu.s: otsu.cpp.s
+.PHONY : otsu.s
+
+# target to generate assembly for a file
+otsu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/otsu.cpp.s
+.PHONY : otsu.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... otsu.o"
+	@echo "... otsu.i"
+	@echo "... otsu.s"
 .PHONY : help
 
 

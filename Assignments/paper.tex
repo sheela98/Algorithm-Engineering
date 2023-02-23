@@ -512,13 +512,18 @@ It is better to keep things simple.
 \section{Assignment}
 
 \subsection{What is Cython?}
-Cython is a superset of Python. 
-It is used for computations that could slow down performance.
-Python code tends to be slow. 
-Cython is used for critical computations to speed up perfromance.
-It is an interface with C and C++ libraries.
+Cython is a programming language. 
+It is a superset of Python used to write C / C++ extensions for Python.
+Cython helps improve performance of Python programs.
 
 \subsection{Describe an approach how Python programs can be accelerated with the help of Cython.}
+Cython can be used in sections of Python programs that are performance critical.
+Python is weak in performance and Cython can be used to improve speed. 
+This can be done by identifying sections in Python code that slow down performance.
+These so called critical sections are outsourced to Cython. 
+In Cython the code sections are written in C / C++ or Cython.
+As Cython is a superset of Python valid syntax in Python is valid in Cython aswell.
+The Cython modules can be imported in a Python program and therefore improve performance.
 
 \subsection{Describe two ways for compiling a .pyx Cython module.}
 To compile a .pyx Cython module the command cythonize can be used. 
@@ -530,6 +535,21 @@ This is used to automatically recompile and reload the module.
 The line "import pyximport" and "pyximport.install()" is used at the start of the Python script.
 
 \subsection{Name and describe two compiler directives in Cython.}
+Compiler directives are set through a special header comment.
+This comment is written before any code.
+Additional flags set in the command line overwrite the ones set as header comments.
+\\
+boundscheck: This directive can be set to true or false and is set to true by default.
+If set to false, Cython assumes that indexing operations won't cause any index errors.
+Conditions that would cause index errors may instead cause segfaults or data corruption.
+\\
+wraparound: This directive is set to true by default. 
+In Python arrays and sequences can be indexed relative to the end.
+Negative indexing is allowed in Python, but not supported in C.
+If the directive wraparound is set to false, Cython can't check or correctly handle negative indices.
+If set to true, negative indexing usually raises an index error.
+For safe usage it is recommended to only use this for code that doesn't process negative indices.
+
 % cython: language_level = 3
 % cython: boundscheck = False
 % cython: wraparound = False
@@ -537,14 +557,17 @@ The line "import pyximport" and "pyximport.install()" is used at the start of th
 
 \subsection{What is the difference between, def, cdef, and cpdef when declaring a Cython function?}
 \begin{itemize}
-	\item def - normal python function
+	\item def - is a normal python function
 	\item cdef - can be called only in cython
 	\item cpdef - can be called in cython and python
 \end{itemize}
 
 \subsection{What are typed memoryviews especially useful for in Cython?}
-Memoryviews are useful for passing Python of Numpy arrays to Cython.
-
+Typed memoryviews are used to pass Python or Numpy arrays to Cython.
+It provides a view on the underlying memory.
+Typed memoryviews provide access to memory buffers. 
+They are especially useful for those underlying Numpy arrays.
+Memoryviews provide inside on the underlying memory layout, which can be used for code optimization.
 
 % (12)
 \section{Assignment}
@@ -576,12 +599,14 @@ The old page is marked as invalid until it is erased.
 Blocks are usually 512KB, 1MB (about 128 or 256 pages). The smallest unit to erase is a block.
 
 \subsection{What is the purpose of garbage collection in SSDs?}
-A block contains pages. The number of invalid pages is compared to a threshold. 
-If it exceeds the threshold, the block is claimed by garbage collection.
-Furthermore, garbage collection moves related data segments next to each other.
+Garbage collection is used to periodically optimize an SSD and maintain performance.
+Garbage collection claims blocks that have more invalid pages than a given threshold.
+The blocks can later be used for write operations.
+It also moves realted data segments next to each other.
 
 \subsection{What is the purpose of wear leveling in SSDs?}
 War leveling is used to prolong the life of an SSD.
+It should prevent an unbalanced usage of pages, meaning that certain pages are overused and others not at all.
 
 \subsection{Tell some interesting things about SSDs with an M.2 form factor.}
 The Host Interface provides an interface between host and SSD, such as PCI, SATA or SAS.
@@ -591,21 +616,33 @@ The M.2 form factor exists for both, PCIe and SATA interfaces.
 It has multiple key slots, which have to be checked for compatibility.
 Performance is higher for write operations than read operations.
 
-
 \subsection{What influence do garbage collection and wear leveling have on write amplification of an SSD?}
 Write amplification happens when writing data and the data to write is multiplied into a disproportional amount of data on the SSD.
 Garbage collection and wear levelling can increase write amplification.
 
 \subsection{Discuss three different recommendations for writing code for SSDs.}
-When writing code for SSDs it is important to avoid scattered updates and use compact data structures.
-Additionally, for large IO, only a few threads suffice to achieve maximum performance.
+\textbf{Compact data structures} should be used when writing code for SSDs. 
+The smallest unit to update in SSDs is a page. 
+Even if only a single bit is updated, it will always result in an SSD write of at least 4 KB.
+The same goes for reading.
+Therefore, small updates should be avoided and compact data structures should be used.
+\\
+Code for SSDs should \textbf{avoid full SSD usage}. 
+This influences the writing performance and write amplification factor.
+A full SSD causes more blocks to be moved around to free a block, which affects performance.
+\\
+An SSD has multiple levels of internal parallelism. 
+For /\textbf{small IO multiple threads} should be used. 
+When reading small pages, multiple threads make efficient use of the internal SSD parallelism.
+For big IO only a few threads suffice, as we can make use of an SSD's internal parallelism.
 
 \subsection{How could the CPU load for IO be reduced?}
 To reduce CPU load one can use asynchronous IO system calls instead of blocking ones.
 Furthermore, the OS buffering has to be diabled.
 
 \subsection{How could you solve problems that do not fit in DRAM without major code adjustments?}
-To solve such problems one can use memory mapped files on flash.
+To solve problems that do not fit in RAM one can use memory mapped files on flash. 
+This can also be done using Numpy for computations that don't fit into memory.
 
 %
 % ---- Bibliography ----
@@ -616,10 +653,10 @@ To solve such problems one can use memory mapped files on flash.
 % \bibliographystyle{splncs04}
 % \bibliography{mybibliography}
 %
-\begin{thebibliography}{8}
-
-\bibitem{ref_url1}
-Armv8-A Reference Manual pdf, pages 30-70, pages 1708-1808 \\ \url{https://developer.arm.com/documentation/ddi0487/ga}.
-
-\end{thebibliography}
+% \begin{thebibliography}{8}
+% 
+% \bibitem{ref_url1}
+% Armv8-A Reference Manual pdf, pages 30-70, pages 1708-1808 \\ \url{https://developer.arm.com/documentation/ddi0487/ga}.
+%
+% \end{thebibliography}
 \end{document}

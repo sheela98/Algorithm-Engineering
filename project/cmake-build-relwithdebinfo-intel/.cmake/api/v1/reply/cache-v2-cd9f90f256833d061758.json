@@ -191,11 +191,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "CXX compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
-			"value" : "/usr/local/bin/icpc"
+			"type" : "UNINITIALIZED",
+			"value" : "icpc"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -287,11 +287,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
-			"value" : "/usr/local/bin/icc"
+			"type" : "UNINITIALIZED",
+			"value" : "icc"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",

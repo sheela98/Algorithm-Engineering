@@ -89,6 +89,12 @@
 		<Unit filename="/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/project/main.cpp">
 			<Option target="main"/>
 		</Unit>
+		<Unit filename="/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/project/otsu.cpp">
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/project/otsu.h">
+			<Option target="main"/>
+		</Unit>
 		<Unit filename="/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/project/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

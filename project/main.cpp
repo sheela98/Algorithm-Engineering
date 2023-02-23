@@ -68,26 +68,79 @@ void medianFilter(string inputFile, string outputFile, int width, int height, in
     fclose(outFile);
 }
 
-void readPPMHeader(FILE *file, unsigned char *header) {
-    fread(header, 15, 1, file);
-}
 
-void readPPMImage(FILE *file, unsigned char *image, int size) {
-    fread(image, size, 1, file);
-}
 
-void writePPM(FILE *file, unsigned char *header, unsigned char *image, int size) {
-    fwrite(header, 15, 1, file);
-    fwrite(image, size, 1, file);
-}
+// Convert PPM image to PGM greyscale image
+int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
 
-void removeRed(unsigned char *image, unsigned char *withoutredimage, int size) {
-    int i;
-    for(i = 0; i < size; i+=3) {
-        withoutredimage[i] = 0; // set red component to 0
-        withoutredimage[i+1] = image[i+1]; // set blue to image
-        withoutredimage[i+2] = image[i+1]; // set green to image
+    // open the input file
+    FILE* infile = fopen(infile_name, "rb");
+    if (!infile) {
+        fprintf(stderr, "Error: could not open input file %s\n", infile_name);
+        return 1;
     }
+
+    // read the magic number
+    char magic_number[3];
+    if (fscanf(infile, "%2s", magic_number) != 1 || magic_number[0] != 'P' || magic_number[1] != '6') {
+        fprintf(stderr, "Error: input file is not in PPM format\n");
+        fclose(infile);
+        return 1;
+    }
+
+    // read the image width, height, and max color value
+    int width, height, maxval;
+    if (fscanf(infile, "%d %d %d\n", &width, &height, &maxval) != 3 || maxval > 255) {
+        fprintf(stderr, "Error: invalid PPM format\n");
+        fclose(infile);
+        return 1;
+    }
+
+    // allocate memory for the RGB pixel data
+    vector<unsigned char> data(width * height * 3);
+
+    // read the pixel data
+    if (fread(data.data(), 1, data.size(), infile) != data.size()) {
+        fprintf(stderr, "Error: could not read pixel data\n");
+        fclose(infile);
+        return 1;
+    }
+
+    // close the input file
+    fclose(infile);
+
+    // open the output file
+    FILE* outfile = fopen(outfile_name, "wb");
+    if (!outfile) {
+        fprintf(stderr, "Error: could not open output file\n");
+        return 1;
+    }
+
+    // write the PGM header
+    fprintf(outfile, "P5\n%d %d\n255\n", width, height);
+
+    // allocate memory for the grayscale pixel data
+    vector<unsigned char> graydata(width * height);
+
+    // convert the RGB pixel data to grayscale
+    for (int i = 0; i < width * height; i++) {
+        unsigned char r = data[i * 3];
+        unsigned char g = data[i * 3 + 1];
+        unsigned char b = data[i * 3 + 2];
+        graydata[i] = (unsigned char)(0.299 * r + 0.587 * g + 0.114 * b);
+    }
+
+    // write the grayscale pixel data to the output file
+    if (fwrite(graydata.data(), 1, graydata.size(), outfile) != graydata.size()) {
+        fprintf(stderr, "Error: could not write pixel data\n");
+        fclose(outfile);
+        return 1;
+    }
+
+    // close the output file
+    fclose(outfile);
+
+    return 0;
 }
 
 int getDimension(unsigned char *header, int &pos) {
@@ -115,50 +168,123 @@ void insertionSort(int arr[], int n) {
     }
 }
 
-
-
-int main() {
-    //ImageReader imageReader();
+void readPPM(const char *filename) {
     FILE *read;
-    const char *filename = "/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/project/read_image.ppm";
     read = fopen(filename, "rb"); // open in binary format
 
     unsigned char header[15], *image;
-    readPPMHeader(read, header); // read header
+    fread(header, 15, 1, read);
     if (header[0] != 'P' || header[1] != '6') // check header, p6 - binary
     {
-        cout << "Wrong file format\n";
-        return 0;
+        fprintf(stderr, "Wrong file format\n");
     }
 
-    FILE *write;
-    // "w" - write (creates an empty file for output operations)
-    write = fopen("/Users/sheela_1/Documents/5_WS_22/Algorithm Engineering/Algorithm-Engineering/project/write_image.ppm", "wb");
-
-    int clrs;
     int pos = 3;
     int width = getDimension(header, pos);
     pos++;
     int height = getDimension(header, pos);
     cout << "width: " << width << "\theight: " << height << "\n";
 
-    // pixel: w * h * 3 (bytes - RGB)
     image = new unsigned char [width * height * 3];
+    fread(image, width*height*3, 1, read);
+    fclose(read);
+}
 
-    unsigned char *withoutredimage;
-    withoutredimage = new unsigned char [width * height * 3];
+void removeRed(const char *filename, unsigned char *withoutredimage) {
+    FILE *read, *write;
+    read = fopen(filename, "rb"); // open in binary format
 
-    readPPMImage(read, image, width*height*3);
-    removeRed(image, withoutredimage, width*height*3);
-    writePPM(write, header, withoutredimage, width*height*3);
+    unsigned char header[15], *image;
+    fread(header, 15, 1, read);
+    if (header[0] != 'P' || header[1] != '6') // check header, p6 - binary
+    {
+        fprintf(stderr, "Wrong file format\n");
+    }
 
-    // Median Filter
-    int filterSize = 3;
-    medianFilter("img.ppm", "output.ppm", width, height, filterSize);
-    //
+    int pos = 3;
+    int width = getDimension(header, pos);
+    pos++;
+    int height = getDimension(header, pos);
+    cout << "width: " << width << "\theight: " << height << "\n";
+
+    image = new unsigned char [width * height * 3];
+    fread(image, width*height*3, 1, read);
+
+    // Remove red
+    int i;
+    for(i = 0; i < width*height*3; i+=3) {
+        withoutredimage[i] = 0; // set red component to 0
+        withoutredimage[i+1] = image[i+1]; // set blue to image
+        withoutredimage[i+2] = image[i+1]; // set green to image
+    }
+
+    fwrite(header, 15, 1, write);
+    fwrite(withoutredimage, width*height*3, 1, write);
 
     fclose(read);
     fclose(write);
 
-    return 0;
+}
+
+int getWidth(const char *filename) {
+    FILE *read, *write;
+    read = fopen(filename, "rb"); // open in binary format
+
+    unsigned char header[15], *image;
+    fread(header, 15, 1, read);
+    if (header[0] != 'P' || header[1] != '6') // check header, p6 - binary
+    {
+        fprintf(stderr, "Wrong file format\n");
+    }
+
+    int pos = 3;
+    int width = getDimension(header, pos);
+    return width;
+}
+
+int getHeight(const char *filename) {
+    FILE *read, *write;
+    read = fopen(filename, "rb"); // open in binary format
+
+    unsigned char header[15], *image;
+    fread(header, 15, 1, read);
+    if (header[0] != 'P' || header[1] != '6') // check header, p6 - binary
+    {
+        fprintf(stderr, "Wrong file format\n");
+    }
+
+    int pos = 4;
+    int height = getDimension(header, pos);
+    return height;
+}
+
+int main() {
+
+    string input, output;
+    int filterSize = 3, mode;
+
+    cout << "Enhancer for Scanned Images - Console Application" << endl;
+    cout << "Enter the name of the input image. Format: file.ppm" << endl;
+
+    while(input != "exit") {
+        cin >> input;
+
+        cout << "Enter the mode. 1 for Median Filter, 2 for Conversion to PPM to PGM";
+        cin >> mode;
+
+        switch (mode) {
+            case 1:
+                cout << "Mode 1";
+                // Median Filter
+                medianFilter(input, output, getWidth(input.c_str()), getHeight(input.c_str()), filterSize);
+                break;
+            case 2:
+                if (convert_ppm_to_pgm(input.c_str(), output.c_str()) != 0) {
+                    fprintf(stderr, "Error: conversion failed\n");
+                    return 1;
+                }
+                break;
+        }
+    }
+
 }
