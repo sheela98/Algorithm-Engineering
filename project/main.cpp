@@ -27,6 +27,12 @@ Pixel median(vector<Pixel> v) {
 }
 
 void medianFilter(string inputFile, string outputFile, int width, int height, int filterSize) {
+    /*
+     *  Removes noise from an input image using a median filter.
+     *  Parameter: input image, output image, width, height, filter size
+     *  Returns: void
+     */
+
     FILE* inFile = fopen(inputFile.c_str(), "rb");
     FILE* outFile = fopen(outputFile.c_str(), "wb");
     if (inFile == NULL || outFile == NULL) {
@@ -69,9 +75,12 @@ void medianFilter(string inputFile, string outputFile, int width, int height, in
 }
 
 
-
-// Convert PPM image to PGM greyscale image
 int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
+    /*
+     * Converts a ppm image to a pgm greyscale image:
+     * Parameters: input image, output image
+     * Returns: 1 for error, 0 if successful
+     */
 
     // open the input file
     FILE* infile = fopen(infile_name, "rb");
@@ -144,6 +153,12 @@ int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
 }
 
 int getDimension(unsigned char *header, int &pos) {
+    /*
+     * Gets the dimensions of a ppm image
+     * Parameters: header, position
+     * Returns: dimensions
+     */
+
     int dim = 0;
     // read characters and store as integers
     for(; header[pos]!='\n' && header[pos]!=' '; pos++)
@@ -151,82 +166,13 @@ int getDimension(unsigned char *header, int &pos) {
     return dim;
 }
 
-void insertionSort(int arr[], int n) {
-    int i, key, j;
-    for (i = 1; i < n; i++) {
-        key = arr[i];
-        j = i - 1;
-
-        /* Move elements of arr[0..i-1], that are
-        greater than key, to one position ahead
-        of their current position */
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
-            j = j - 1;
-        }
-        arr[j + 1] = key;
-    }
-}
-
-void readPPM(const char *filename) {
-    FILE *read;
-    read = fopen(filename, "rb"); // open in binary format
-
-    unsigned char header[15], *image;
-    fread(header, 15, 1, read);
-    if (header[0] != 'P' || header[1] != '6') // check header, p6 - binary
-    {
-        fprintf(stderr, "Wrong file format\n");
-    }
-
-    int pos = 3;
-    int width = getDimension(header, pos);
-    pos++;
-    int height = getDimension(header, pos);
-    cout << "width: " << width << "\theight: " << height << "\n";
-
-    image = new unsigned char [width * height * 3];
-    fread(image, width*height*3, 1, read);
-    fclose(read);
-}
-
-void removeRed(const char *filename, unsigned char *withoutredimage) {
-    FILE *read, *write;
-    read = fopen(filename, "rb"); // open in binary format
-
-    unsigned char header[15], *image;
-    fread(header, 15, 1, read);
-    if (header[0] != 'P' || header[1] != '6') // check header, p6 - binary
-    {
-        fprintf(stderr, "Wrong file format\n");
-    }
-
-    int pos = 3;
-    int width = getDimension(header, pos);
-    pos++;
-    int height = getDimension(header, pos);
-    cout << "width: " << width << "\theight: " << height << "\n";
-
-    image = new unsigned char [width * height * 3];
-    fread(image, width*height*3, 1, read);
-
-    // Remove red
-    int i;
-    for(i = 0; i < width*height*3; i+=3) {
-        withoutredimage[i] = 0; // set red component to 0
-        withoutredimage[i+1] = image[i+1]; // set blue to image
-        withoutredimage[i+2] = image[i+1]; // set green to image
-    }
-
-    fwrite(header, 15, 1, write);
-    fwrite(withoutredimage, width*height*3, 1, write);
-
-    fclose(read);
-    fclose(write);
-
-}
-
 int getWidth(const char *filename) {
+    /*
+     * Gets the width of a ppm image
+     * Parameters: input image
+     * Returns: width
+     */
+
     FILE *read, *write;
     read = fopen(filename, "rb"); // open in binary format
 
@@ -243,6 +189,12 @@ int getWidth(const char *filename) {
 }
 
 int getHeight(const char *filename) {
+    /*
+     * Gets the height of a ppm image
+     * Parameters: input image
+     * Returns: height
+     */
+
     FILE *read, *write;
     read = fopen(filename, "rb"); // open in binary format
 

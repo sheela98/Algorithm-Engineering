@@ -16,6 +16,13 @@ using namespace std;
 
 
 void adaptive_thresholding(const char *input_image, const char *output_image, int blockSize, int threshold_offset) {
+    /*
+     * does image processing on a given input image with adaptive thresholding
+     * the processed image is written to a different file
+     * parameters: input image, output image, block size, threshold offset
+     * returns: void
+     */
+
     // Load the PGM image
     FILE* inputFile = fopen(input_image, "rb");
     if (!inputFile) {
@@ -65,7 +72,15 @@ void adaptive_thresholding(const char *input_image, const char *output_image, in
 
 }
 
+
 void adaptive_thresholding_with_openmp(const char *input_image, const char *output_image, int blockSize, int threshold_offset) {
+    /*
+     * does image processing on a given input image with adaptive thresholding
+     * the processed image is written to a different file
+     * parameters: input image, output image, block size, threshold offset
+     * returns: void
+     */
+
     // Load the PGM image
     FILE* inputFile = fopen(input_image, "rb");
     if (!inputFile) {
