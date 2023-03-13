@@ -6,7 +6,7 @@
 
 ## Description
 
-This application is a university project written in C++. It takes an image as input and uses several techniques of image processing to enhance visibility of the image.
+This application is a university project written in C++. It takes an image as input and uses several techniques of image processing to enhance visibility of the image. The project is described in the paper included in the repository. The paper contains an in-depth description of the algorithms used.
 The output is an image aswell which is stored in the respective folder.
 
 The application provides a console interface, which allows to input the name of the image to be processed. PPM images are supported by the program. Other image types can easily be converted using the command: <br>
@@ -48,3 +48,7 @@ output: ppm image with improved quality
 
 - Add tests
 - Performance tests
+
+Requirements:
+
+- OpenMP
