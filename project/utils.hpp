@@ -14,7 +14,7 @@ using namespace std;
  * Parameters: input image, output image, width, height, filter size
  * Returns: void
  */
-void medianFilter(string inputFile, string outputFile, int width, int height, int filterSize);
+void medianFilter(const string& inputFile, const string& outputFile, int width, int height, int filterSize);
 
 
 /* ADAPTIVE THRESHOLDING
