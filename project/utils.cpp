@@ -1,10 +1,17 @@
-#include <iostream>
-#include <omp.h>
+//
+// Created by Sheela on 28/02/23.
+//
+
 #include "utils.hpp"
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+#include <cstring>
+#include <omp.h>
 
 using namespace std;
 
-/*
 struct Pixel {
     unsigned char r, g, b;
 };
@@ -24,14 +31,8 @@ Pixel median(vector<Pixel> v) {
     p.b = v[v.size() / 2].b;
     return p;
 }
-/*
+
 void medianFilter(string inputFile, string outputFile, int width, int height, int filterSize) {
-    /*
-     *  Removes noise from an input image using a median filter.
-     *  Parameter: input image, output image, width, height, filter size
-     *  Returns: void
-     */
-/*
     FILE* inFile = fopen(inputFile.c_str(), "rb");
     FILE* outFile = fopen(outputFile.c_str(), "wb");
     if (inFile == NULL || outFile == NULL) {
@@ -75,12 +76,6 @@ void medianFilter(string inputFile, string outputFile, int width, int height, in
 
 
 int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
-    /*
-     * Converts a ppm image to a pgm greyscale image:
-     * Parameters: input image, output image
-     * Returns: 1 for error, 0 if successful
-     */
-/*
     // open the input file
     FILE* infile = fopen(infile_name, "rb");
     if (!infile) {
@@ -200,13 +195,6 @@ void convert_pgm_to_ppm(const char* input_file_path, const char* output_file_pat
 }
 
 void adaptive_thresholding(const char *input_image, const char *output_image, int blockSize, int threshold_offset) {
-    /*
-     * does image processing on a given input image with adaptive thresholding
-     * the processed image is written to a different file
-     * parameters: input image, output image, block size, threshold offset
-     * returns: void
-     */
-/*
     // Load the PGM image
     FILE* inputFile = fopen(input_image, "rb");
     if (!inputFile) {
@@ -260,12 +248,6 @@ void adaptive_thresholding(const char *input_image, const char *output_image, in
 }
 
 int getDimension(unsigned char *header, int &pos) {
-    /*
-     * Gets the dimensions of a ppm image
-     * Parameters: header, position
-     * Returns: dimensions
-     */
-/*
     int dim = 0;
     // read characters and store as integers
     for(; header[pos]!='\n' && header[pos]!=' '; pos++)
@@ -274,12 +256,6 @@ int getDimension(unsigned char *header, int &pos) {
 }
 
 int getWidth(const char *filename) {
-    /*
-     * Gets the width of a ppm image
-     * Parameters: input image
-     * Returns: width
-     */
-/*
     FILE *read, *write;
     read = fopen(filename, "rb"); // open in binary format
 
@@ -296,12 +272,6 @@ int getWidth(const char *filename) {
 }
 
 int getHeight(const char *filename) {
-    /*
-     * Gets the height of a ppm image
-     * Parameters: input image
-     * Returns: height
-     */
-/*
     FILE *read, *write;
     read = fopen(filename, "rb"); // open in binary format
 
@@ -316,57 +286,17 @@ int getHeight(const char *filename) {
     int height = getDimension(header, pos);
     return height;
 }
-*/
-
+/*
 int main() {
+    string input = "images/inputfile.ppm", output = "images/outputfile.ppm";
 
-    const char *input_pgm = "images/image.pgm";
-    const char *input_ppm = "images/image.ppm";
-    const char *output_pgm = "images/output.pgm";
-    const char *output_ppm = "images/output.ppm";
-
-    const double start = omp_get_wtime(); // measure performance
-    convert_pgm_to_ppm(input_pgm, output_ppm);
-    cout << omp_get_wtime() - start << " seconds" << endl; // measure performance
-
-    const double start_2 = omp_get_wtime(); // measure performance
-    convert_ppm_to_pgm(input_ppm, output_pgm);
-    cout << omp_get_wtime() - start << " seconds" << endl; // measure performance
-
-    const double start_3 = omp_get_wtime(); // measure performance
-    const char *input_image = "images/image.pgm";
-    const char *output_image = "images/output.pgm";
-    adaptive_thresholding(input_image, output_image, 31, 15);
-    cout << omp_get_wtime() - start_3 << " seconds" << endl; // measure performance
-
-    /*
-    string input, output;
+    const double start_00 = omp_get_wtime(); // measure performance
     int filterSize = 3, mode;
+    medianFilter(input, output, getWidth(input.c_str()), getHeight(input.c_str()), filterSize);
+    cout << "Median normal: "<< omp_get_wtime() - start_00 << " seconds" << endl; // measure performance
 
-    cout << "Enhancer for Scanned Images - Console Application" << endl;
-    cout << "Enter the name of the input image. Format: file.ppm" << endl;
+    const double start_01 = omp_get_wtime(); // measure performance
+    convert_ppm_to_pgm(input.c_str(), output.c_str());
+    cout << "Convert ppm to pgm normal: "<< omp_get_wtime() - start_01 << " seconds" << endl; // measure performance
 
-    while(input != "exit") {
-        cin >> input;
-
-        cout << "Enter the mode. 1 for Median Filter, 2 for Conversion to PPM to PGM";
-        cin >> mode;
-
-        switch (mode) {
-            case 1:
-                cout << "Mode 1";
-                // Median Filter
-                medianFilter(input, output, getWidth(input.c_str()), getHeight(input.c_str()), filterSize);
-                break;
-            case 2:
-                if (convert_ppm_to_pgm(input.c_str(), output.c_str()) != 0) {
-                    fprintf(stderr, "Error: conversion failed\n");
-                    return 1;
-                }
-                break;
-        }
-    }
-     */
-    return 0;
-
-}
+}*/
