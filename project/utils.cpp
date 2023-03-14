@@ -337,3 +337,8 @@ int getHeight(const char *filename) {
     int height = getDimension(header, pos);
     return height;
 }
+
+void image_enhancer(const char *input, const char *output) {
+    apply_median_filter(input, output);
+    apply_adaptive_thresholding(output, output);
+}

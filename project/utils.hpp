@@ -16,6 +16,14 @@ struct Pixel {
     unsigned char r, g, b;
 };
 
+/*
+ * IMAGE ENHANCER
+ * Applies median filtering and adaptive thresholding to the image and returns the output.
+ * Parameters: input image, output image
+ * Returns: void
+ */
+void image_enhancer(const char *input, const char *output);
+
 /* MEDIAN FILTER
  * Computes the median filter of an input image and writes the processed image to an output image.
  * Parameters: image, width, height
@@ -93,6 +101,5 @@ int getWidth(const char *filename);
  * Returns: height
  */
 int getHeight(const char *filename);
-
 
 #endif//PROJECT_UTILS_HPP
