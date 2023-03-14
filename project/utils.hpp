@@ -9,13 +9,40 @@
 #include <string>
 using namespace std;
 
+/* PIXEL
+ * To separate the RGB values.
+ */
+struct Pixel {
+    unsigned char r, g, b;
+};
+
 /* MEDIAN FILTER
  * Computes the median filter of an input image and writes the processed image to an output image.
- * Parameters: input image, output image, width, height, filter size
+ * Parameters: image, width, height
  * Returns: void
  */
-void medianFilter(const string& inputFile, const string& outputFile, int width, int height, int filterSize);
+void median_filter(Pixel* image, int width, int height);
 
+/* APPLY MEDIAN FILTER
+ * Reads the ppm image, applies the median filter and writes the output to the respective file.
+ * Parameters: input, output
+ * Returns: void
+ */
+void apply_median_filter(const char *input, const char *output);
+
+/* READ PPM
+ * Reads the ppm image and writes the width, height and returns the image pixels.
+ * Parameters: input, width (empty), height (empty)
+ * Returns: image pixels
+ */
+Pixel* read_ppm(const char* filename, int& width, int& height);
+
+/* WRITE PPM
+ * Writes the ppm image to the respective file.
+ * Parameters: output, image, width, height
+ * Returns: void
+ */
+void write_ppm(const char* filename, Pixel* image, int width, int height);
 
 /* ADAPTIVE THRESHOLDING
  * Does image processing on a given input image with adaptive thresholding
@@ -24,6 +51,13 @@ void medianFilter(const string& inputFile, const string& outputFile, int width, 
  * Returns: void
  */
 void adaptive_thresholding(const char *input_image, const char *output_image, int blockSize, int threshold_offset);
+
+/* APPLY ADAPTIVE THRESHOLDING
+ * Applies adaptive thresholding to ppm image and writes result to output.
+ * Parameters: input image, output image
+ * Returns: void
+ */
+void apply_adaptive_thresholding(const char *input, const char *output);
 
 /* CONVERSION PPM TO PGM
  * Converts a ppm image to a pgm greyscale image:

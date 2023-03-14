@@ -12,68 +12,107 @@
 
 using namespace std;
 
-struct Pixel {
-    unsigned char r, g, b;
-};
-
-Pixel median(vector<Pixel> v) {
-    sort(v.begin(), v.end(), [](Pixel a, Pixel b) {
-        return a.r < b.r;
-    });
-    Pixel p = v[v.size() / 2];
-    sort(v.begin(), v.end(), [](Pixel a, Pixel b) {
-        return a.g < b.g;
-    });
-    p.g = v[v.size() / 2].g;
-    sort(v.begin(), v.end(), [](Pixel a, Pixel b) {
-        return a.b < b.b;
-    });
-    p.b = v[v.size() / 2].b;
-    return p;
-}
-
-void medianFilter(string inputFile, string outputFile, int width, int height, int filterSize) {
-    FILE* inFile = fopen(inputFile.c_str(), "rb");
-    FILE* outFile = fopen(outputFile.c_str(), "wb");
-    if (inFile == NULL || outFile == NULL) {
-        printf("Error: Cannot open file\n");
-        return;
+Pixel* read_ppm(const char* filename, int& width, int& height) {
+    // Open the file
+    FILE* file = fopen(filename, "rb");
+    if (!file) {
+        cerr << "Error: could not open file " << filename << endl;
+        exit(1);
     }
 
-    char magicNumber[3];
-    fscanf(inFile, "%s", magicNumber);
-    int maxVal;
-    fscanf(inFile, "%d", &width);
-    fscanf(inFile, "%d", &height);
-    fscanf(inFile, "%d", &maxVal);
-    fprintf(outFile, "P6\n%d %d\n%d\n", width, height, maxVal);
+    // Read the magic number
+    char magic[2];
+    fread(magic, 1, 2, file);
+    if (magic[0] != 'P' || magic[1] != '6') {
+        cerr << "Error: file " << filename << " is not a ppm image file" << endl;
+        exit(1);
+    }
 
-    int halfSize = filterSize / 2;
-    vector<Pixel> window(filterSize * filterSize);
+    // Read the image dimensions
+    fscanf(file, "%d %d\n", &width, &height);
 
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            for (int y = -halfSize; y <= halfSize; ++y) {
-                for (int x = -halfSize; x <= halfSize; ++x) {
-                    int ii = i + y;
-                    int jj = j + x;
-                    if (ii < 0) ii = 0;
-                    if (ii >= height) ii = height - 1;
-                    if (jj < 0) jj = 0;
-                    if (jj >= width) jj = width - 1;
-                    fseek(inFile, sizeof(char) * (ii * width + jj) * 3, SEEK_SET);
-                    fread(&window[(y + halfSize) * filterSize + x + halfSize], sizeof(char), 3, inFile);
+    // Read the maximum color value
+    int maxColor;
+    fscanf(file, "%d\n", &maxColor);
+    if (maxColor != 255) {
+        cerr << "Error: file " << filename << " has invalid maximum color value" << endl;
+        exit(1);
+    }
+
+    // Read the pixel data
+    Pixel* image = new Pixel[width*height];
+    fread(image, sizeof(Pixel), width*height, file);
+
+    // Close the file
+    fclose(file);
+
+    return image;
+}
+
+void write_ppm(const char* filename, Pixel* image, int width, int height) {
+    // Open the file
+    FILE* file = fopen(filename, "wb");
+    if (!file) {
+        cerr << "Error: could not open file " << filename << endl;
+        exit(1);
+    }
+
+    // Write the magic number and image dimensions
+    fprintf(file, "P6\n%d %d\n%d\n", width, height, 255);
+
+    // Write the pixel data
+    fwrite(image, sizeof(Pixel), width*height, file);
+
+    // Close the file
+    fclose(file);
+}
+
+void median_filter(Pixel* image, int width, int height) {
+    // Create a temporary image buffer
+    Pixel* temp = new Pixel[width*height];
+
+#pragma omp parallel for collapse(2)
+    // Loop through all pixels in the image
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            // Create a list of pixel values in the 2x2 window around the current pixel
+            Pixel window[4];
+            int index = 0;
+            for (int dy = -1; dy <= 0; dy++) {
+                for (int dx = -1; dx <= 0; dx++) {
+                    int nx = x + dx;
+                    int ny = y + dy;
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                        window[index++] = image[ny*width + nx];
+                    }
                 }
             }
-            Pixel p = median(window);
-            fwrite(&p, sizeof(char), 3, outFile);
+
+            // Sort the pixel values by intensity
+            sort(window, window+index, [](Pixel a, Pixel b) {
+                return 0.299*a.r + 0.587*a.g + 0.114*a.b < 0.299*b.r + 0.587*b.g + 0.114*b.b;
+            });
+
+            // Set the current pixel value to the median value in the window
+            temp[y*width + x] = window[index/2];
         }
     }
 
-    fclose(inFile);
-    fclose(outFile);
+    // Copy the temporary image buffer back to the original image buffer
+    memcpy(image, temp, width*height*sizeof(Pixel));
+
+    // Free the temporary image buffer
+    delete[] temp;
 }
 
+void apply_median_filter(const char *input, const char *output) {
+    int width, height;
+    Pixel* image = read_ppm(input, width, height);
+    median_filter(image, width, height);
+    write_ppm(output, image, width, height);
+
+    delete[] image;
+}
 
 int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
     // open the input file
@@ -255,6 +294,18 @@ int getDimension(unsigned char *header, int &pos) {
     return dim;
 }
 
+void apply_adaptive_thresholding(const char *input, const char *output) {
+    const char *output_pgm = "images/img.pgm";
+    // Convert ppm to pgm image
+    convert_ppm_to_pgm(input, output_pgm);
+
+    // Apply adaptive thresholding to converted image and write to output_pgm
+    adaptive_thresholding(output_pgm, output_pgm, 31, 15);
+
+    // Convert output_pgm to output ppm image
+    convert_pgm_to_ppm(output_pgm, output);
+}
+
 int getWidth(const char *filename) {
     FILE *read, *write;
     read = fopen(filename, "rb"); // open in binary format
@@ -286,17 +337,3 @@ int getHeight(const char *filename) {
     int height = getDimension(header, pos);
     return height;
 }
-/*
-int main() {
-    string input = "images/inputfile.ppm", output = "images/outputfile.ppm";
-
-    const double start_00 = omp_get_wtime(); // measure performance
-    int filterSize = 3, mode;
-    medianFilter(input, output, getWidth(input.c_str()), getHeight(input.c_str()), filterSize);
-    cout << "Median normal: "<< omp_get_wtime() - start_00 << " seconds" << endl; // measure performance
-
-    const double start_01 = omp_get_wtime(); // measure performance
-    convert_ppm_to_pgm(input.c_str(), output.c_str());
-    cout << "Convert ppm to pgm normal: "<< omp_get_wtime() - start_01 << " seconds" << endl; // measure performance
-
-}*/
