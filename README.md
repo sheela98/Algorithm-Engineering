@@ -35,6 +35,7 @@ The project makes use of several optimization techniques to improve performance.
 ## Instructions
 
 input: ppm image
+
 output: ppm image with improved quality
 
 The implementation includes a CMake file to build the project.
