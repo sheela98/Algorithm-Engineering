@@ -26,7 +26,6 @@ The project makes use of several optimization techniques to improve performance.
 - Median filter
 
 - Adaptive binary thresholding
-- Otsu's method
 
 - Optimization
 - OpenMP parallel, parallel for

@@ -8,6 +8,7 @@
 #include "utils.h"
 #include <filesystem>
 
+
 // READ PPM
 TEST_CASE("Test read_ppm function", "[read_ppm]") {
     int width, height;
@@ -56,7 +57,9 @@ TEST_CASE("Test convert_pgm_to_ppm", "[convert_pgm_to_ppm]") {
 // GET HEIGHT
 TEST_CASE("Test getHeight", "[getHeight]") {
     REQUIRE(getHeight("images/img_00.ppm") == 200);
+    CHECK(getHeight("images/img_00.ppm") == 200);
     REQUIRE(getHeight("images/img_05.ppm") == 94);
+    CHECK(getHeight("images/img_05.ppm") == 94);
 }
 
 // GET WIDTH
@@ -64,4 +67,3 @@ TEST_CASE("Test getWidth", "[getWidth]") {
     REQUIRE(getWidth("images/img_00.ppm") == 1200);
     REQUIRE(getWidth("images/img_05.ppm") == 194);
 }
-

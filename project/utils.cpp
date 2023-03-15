@@ -169,13 +169,15 @@ int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
     // allocate memory for the grayscale pixel data
     vector<unsigned char> graydata(width * height);
 
+
     // convert the RGB pixel data to grayscale
 #pragma omp parallel for
     for (int i = 0; i < width * height; i++) {
-        unsigned char r = data[i * 3];
-        unsigned char g = data[i * 3 + 1];
-        unsigned char b = data[i * 3 + 2];
-        graydata[i] = (unsigned char)(0.299 * r + 0.587 * g + 0.114 * b);
+        Pixel image;
+        image.r = data[i * 3];
+        image.g = data[i * 3 + 1];
+        image.b = data[i * 3 + 2];
+        graydata[i] = (unsigned char)(0.299 * image.r + 0.587 * image.g + 0.114 * image.b);
     }
 
     // write the grayscale pixel data to the output file
@@ -221,6 +223,7 @@ void convert_pgm_to_ppm(const char* input_file_path, const char* output_file_pat
     unsigned char* pixel_data = (unsigned char*)malloc(width * height * sizeof(unsigned char));
     fread(pixel_data, sizeof(unsigned char), width * height, input_file);
     unsigned char* rgb_data = (unsigned char*)malloc(3 * width * height * sizeof(unsigned char));
+
 #pragma omp parallel for
     for (int i = 0; i < width * height; i++) {
         rgb_data[3 * i] = pixel_data[i];
@@ -264,7 +267,7 @@ void adaptive_thresholding(const char *input_image, const char *output_image, in
         for (int x = 0; x < width; ++x) {
             int sum = 0;
             int count = 0;
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for simd collapse(2)
             for (int j = y - blockSize / 2; j <= y + blockSize / 2; ++j) {
                 for (int i = x - blockSize / 2; i <= x + blockSize / 2; ++i) {
                     if (i >= 0 && i < width && j >= 0 && j < height) {

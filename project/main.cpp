@@ -7,17 +7,7 @@
 using namespace std;
 
 int main() {
-
-    /*
-    const char *input_ppm = "images/img_09.ppm";
-    const char *output_ppm = "images/output.ppm";
-
-    const double start = omp_get_wtime(); // measure performance
-    image_enhancer(input_ppm, output_ppm);
-    cout << omp_get_wtime() - start << " seconds" << endl; // measure performance
-    */
-
-
+    
     string input, output;
 
     cout << "Enhancer for Scanned Images - Console Application" << endl;
