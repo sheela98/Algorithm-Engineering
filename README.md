@@ -4,7 +4,7 @@
 
 ## Description
 
-The repository includes:
+This repository includes:
 
 - Implementation and paper for the image enhancer
 - Exam Assignments
