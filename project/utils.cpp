@@ -2,13 +2,13 @@
 // Created by Sheela on 28/02/23.
 //
 
-#include "utils.hpp"
-#include <iostream>
-#include <cstdio>
+#include "utils.h"
 #include <algorithm>
-#include <vector>
+#include <cstdio>
 #include <cstring>
+#include <iostream>
 #include <omp.h>
+#include <vector>
 
 using namespace std;
 

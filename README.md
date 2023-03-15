@@ -2,33 +2,25 @@
 
 ### Algorithm-Engineering
 
-## Answer (What? Why? How?)
-
 ## Description
 
-This application is a university project written in C++. It takes an image as input and uses several techniques of image processing to enhance visibility of the image. The project is described in the paper included in the repository. The paper contains an in-depth description of the algorithms used.
-The output is an image aswell which is stored in the respective folder.
+The repository includes:
 
-The application provides a console interface, which allows to input the name of the image to be processed. PPM images are supported by the program. Other image types can easily be converted using the command: <br>
-`convert original_image.jpg -compress none converted_image.ppm`
+- Implementation and paper for the image enhancer
+- Exam Assignments
+- Coding warmups (1 - 4) in the respective folders
 
-The application applies a median filter to the image. This is used for noise removal.
-Furthermore, an adaptive thresholding method is applied for image segmentation. Otsu's method is used to compute a threshold and apply it to the image.
+This implementation presents an image enhancer as part of a university project written in C++. It takes a PPM image as input and uses several techniques of image processing to improve the quality of the image. The project is described in the paper included in the repository including an in-depth description of the algorithms used.
 
-The project makes use of several optimization techniques to improve performance. OpenMP is used to parallelize certain sections of code as well as other things.
-
-- University project
-- Enhancer for scanned images
-- input ppm, output ppm
-- improve quality of scanned images
-- terminal application
-- C++
+The implementation applies a median filter to the image used for noise removal.
+Furthermore, an adaptive thresholding method is applied for image segmentation.
+The project makes use of several optimization techniques to improve performance.
 
 ---
 
 ## Keywords
 
-- ppm, pgm image
+- PPM, PMG image
 
 - Image segmentation
 - Median filter
@@ -46,9 +38,12 @@ The project makes use of several optimization techniques to improve performance.
 input: ppm image
 output: ppm image with improved quality
 
-- Add tests
-- Performance tests
+The implementation includes a CMake file to build the project.
+This includes a folder with sample images to test the image enhancer.
+A console application is provided, which takes PPM images as input.
+The input and desired output path can be entered through the console.
 
 Requirements:
 
-- OpenMP
+- OpenMP is used for performance optimization and has to be installed.
+  (Installation guide - https://www.geeksforgeeks.org/openmp-introduction-with-installation-guide/)
