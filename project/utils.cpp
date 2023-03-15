@@ -12,6 +12,11 @@
 
 using namespace std;
 
+void image_enhancer(const char *input, const char *output) {
+    apply_median_filter(input, output);
+    apply_adaptive_thresholding(output, output);
+}
+
 Pixel* read_ppm(const char* filename, int& width, int& height) {
     // Open the file
     FILE* file = fopen(filename, "rb");
@@ -336,9 +341,4 @@ int getHeight(const char *filename) {
     int pos = 4;
     int height = getDimension(header, pos);
     return height;
-}
-
-void image_enhancer(const char *input, const char *output) {
-    apply_median_filter(input, output);
-    apply_adaptive_thresholding(output, output);
 }

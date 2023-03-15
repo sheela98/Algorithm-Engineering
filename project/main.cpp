@@ -22,7 +22,7 @@ int main() {
     */
 
 
-    string input, output = "images/output.ppm";
+    string input, output = "images/output_2.ppm";
 
     cout << "Enhancer for Scanned Images - Console Application" << endl;
     cout << "Enter the name of the input image. The images are stored to images/output.ppm." << endl;
