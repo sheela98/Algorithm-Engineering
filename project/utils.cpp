@@ -72,6 +72,15 @@ void write_ppm(const char* filename, Pixel* image, int width, int height) {
     fclose(file);
 }
 
+void apply_median_filter(const char *input, const char *output) {
+    int width, height;
+    Pixel* image = read_ppm(input, width, height);
+    median_filter(image, width, height);
+    write_ppm(output, image, width, height);
+
+    delete[] image;
+}
+
 void median_filter(Pixel* image, int width, int height) {
     // Create a temporary image buffer
     Pixel* temp = new Pixel[width*height];
@@ -108,15 +117,6 @@ void median_filter(Pixel* image, int width, int height) {
 
     // Free the temporary image buffer
     delete[] temp;
-}
-
-void apply_median_filter(const char *input, const char *output) {
-    int width, height;
-    Pixel* image = read_ppm(input, width, height);
-    median_filter(image, width, height);
-    write_ppm(output, image, width, height);
-
-    delete[] image;
 }
 
 int convert_ppm_to_pgm(const char* infile_name, const char* outfile_name) {
@@ -241,6 +241,18 @@ void convert_pgm_to_ppm(const char* input_file_path, const char* output_file_pat
     free(rgb_data);
 }
 
+void apply_adaptive_thresholding(const char *input, const char *output) {
+    const char *output_pgm = "images/img.pgm";
+    // Convert ppm to pgm image
+    convert_ppm_to_pgm(input, output_pgm);
+
+    // Apply adaptive thresholding to converted image and write to output_pgm
+    adaptive_thresholding(output_pgm, output_pgm, 31, 15);
+
+    // Convert output_pgm to output ppm image
+    convert_pgm_to_ppm(output_pgm, output);
+}
+
 void adaptive_thresholding(const char *input_image, const char *output_image, int blockSize, int threshold_offset) {
     // Load the PGM image
     FILE* inputFile = fopen(input_image, "rb");
@@ -300,18 +312,6 @@ int getDimension(unsigned char *header, int &pos) {
     for(; header[pos]!='\n' && header[pos]!=' '; pos++)
         dim = dim * 10 + (header[pos] - '0');
     return dim;
-}
-
-void apply_adaptive_thresholding(const char *input, const char *output) {
-    const char *output_pgm = "images/img.pgm";
-    // Convert ppm to pgm image
-    convert_ppm_to_pgm(input, output_pgm);
-
-    // Apply adaptive thresholding to converted image and write to output_pgm
-    adaptive_thresholding(output_pgm, output_pgm, 31, 15);
-
-    // Convert output_pgm to output ppm image
-    convert_pgm_to_ppm(output_pgm, output);
 }
 
 int getWidth(const char *filename) {
