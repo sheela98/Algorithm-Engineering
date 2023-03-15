@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    
+
     string input, output;
 
     cout << "Enhancer for Scanned Images - Console Application" << endl;

@@ -8,7 +8,7 @@ The repository includes:
 
 - Implementation and paper for the image enhancer
 - Exam Assignments
-- Coding warmups (1 - 4) in the respective folders
+- Coding warmups (01_Code - 04_Code) in the respective folders
 
 This implementation presents an image enhancer as part of a university project written in C++. It takes a PPM image as input and uses several techniques of image processing to improve the quality of the image. The project is described in the paper included in the repository including an in-depth description of the algorithms used.
 
